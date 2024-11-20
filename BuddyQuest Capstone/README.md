@@ -57,29 +57,28 @@ Many people struggle to maintain their self-improvement efforts due to a lack of
 
 #### Home Page
 
-![](Homepage.png)
+![](../Assets/Homepage.png)
 
 #### Register Page
 
-![](Register.png)
+![](../Assets/Register.png)
 
 #### Login Page
 
-![](Login.png)
+![](../Assets/Login.png)
 
-#### View habits/home Page
+#### AI Visual habits/home Page
 
-![](Homepage.png)
+![](../Assets/AI%20gen%20Image.webp)
 
-#### View journal Page
-
+ 
 ### Data
 
-![](SQL.png)
+![](../Assets/SQL.png)
 
 ### Endpoints
 
-### POST /users/register
+## POST /users/register
 
 Register a new user account.
 
@@ -93,9 +92,12 @@ Register a new user account.
 ````json
 {
     "token": "somejwt"
-}
+}  
+````
 
-**POST /users/register**
+
+
+### POST /users/register
   Register a new user account.
 
 **Parameters:**
@@ -107,7 +109,7 @@ Register a new user account.
   {
       "token": "somejwt"
   }
-
+````
 ## Habits
 
 ### GET /habits
@@ -129,7 +131,7 @@ Get habits for a logged-in user.
     },
     ...
 ]
-
+````
 ## POST /habits
 
 Adds a new habit for the logged-in user.
@@ -152,7 +154,7 @@ A JSON object representing the newly created habit.
     "name": "Meditation",
     "status": "In Progress"
 }
-
+````
 ## GET /journal
 
 Gets journal entries for a logged-in user.
@@ -177,7 +179,7 @@ A JSON array representing the user's journal entries.
     },
     ...
 ]
-
+````
 ## POST /journal
 
 Adds a new journal entry for the logged-in user.
@@ -201,6 +203,7 @@ A JSON object representing the newly created journal entry.
     "mood": "Motivated",
     "date": "2024-11-01"
 }
+````
 ## GET /partners
 
 Gets a list of accountability partners based on matching goals.
@@ -226,7 +229,7 @@ A JSON array representing a list of accountability partners.
     },
     ...
 ]
-
+````
 ## Auth
 
 ### JWT Authentication
@@ -276,14 +279,15 @@ The JWT token is used for logging in and managing state.
 - Address any bug fixes or issues found during testing
 - Deploy the app to a production environment for demo day
 
-### Nice-to-haves
+### Nice-to-haves 🔍
 #### Gamification Features:
 - Add badges or rewards for consistent habit tracking or journaling
 - Track and display streaks for habits or journal entries
 
-#### User Progress Analytics:
+#### User Progress Analytics: 
 - Provide insights into habit trends, mood changes, and progress over time
 
-#### Push Notifications:
-- Send reminders to users to log habits or journal entries
-````
+#### Social Challenges:
+-  Create and join group challenges with leaderboards entries
+ #### Proximity-based matching:
+- Integrating GPS or Google Maps APIs
