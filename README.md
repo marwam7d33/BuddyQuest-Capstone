@@ -144,28 +144,23 @@ Many people struggle to maintain their self-improvement efforts due to a lack of
 ## **Roadmap**
 
 ### **Frontend Setup**
-
 1. Set up the React project.
 2. Implement responsive UI for all pages.
 3. Add user authentication and session management.
 
 ### **Backend Setup**
-
 1. Create routes for user registration, login, habits, journal, and accountability partners.
 2. Implement JWT authentication.
 
 ### **Habit Tracker**
-
 1. Build habit tracking functionality (add, update, delete habits).
 2. Include habit status updates and progress tracking.
 
 ### **Journal Feature**
-
 1. Develop a journaling system with mood tracking.
 2. Allow users to view past entries in calendar and list views.
 
 ### **Accountability Partners**
-
 1. Create matchmaking logic for shared goals.
 2. Build a simple messaging system.
 
@@ -174,15 +169,3 @@ Many people struggle to maintain their self-improvement efforts due to a lack of
 1. Conduct thorough testing.
 2. Add analytics and gamification features.
 3. Deploy the app for demo day.
-
----
-
-## **License**
-
-BuddyQuest is open source and available under the [MIT License](LICENSE).
-
----
-
-## **Contact**
-
-For questions or feedback, email [your-email@example.com](mailto:your-email@example.com).
