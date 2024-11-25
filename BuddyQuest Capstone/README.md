@@ -153,10 +153,4 @@ Many people struggle to maintain their self-improvement efforts due to a lack of
 
 ---
 
-## **License**
-BuddyQuest is open source and available under the [MIT License](LICENSE).
-
----
-
-## **Contact**
-For questions or feedback, email [your-email@example.com](mailto:your-email@example.com).
+  
