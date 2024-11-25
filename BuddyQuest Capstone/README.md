@@ -1,293 +1,162 @@
-# Project Title
-
-BuddyQuest
-
-## Overview
+# **BuddyQuest**
 
 BuddyQuest is a self-development platform that helps users track their habits, reflect through journaling, and connect with accountability partners to stay motivated on their personal growth journey.
 
-### Problem
+---
 
+## **Overview**
+
+### **Problem**
 Many people struggle to maintain their self-improvement efforts due to a lack of consistent tracking and accountability. While habit trackers and journaling tools exist, they don't always integrate accountability features that help users stay on track. Having an accountability partner can significantly increase the chances of success for self-development goals.
 
-### User Profile
+### **User Profile**
+- **Self-improvement seekers**:
+  - Individuals looking to track their personal growth through habits and journaling.
+  - People who want to stay motivated and need accountability to maintain consistency.
+  - Users who want to connect with others to share and achieve their self-development goals.
 
-- Self-improvement seekers:
-  - Individuals looking to track their personal growth through habits and journaling
-  - People who want to stay motivated and need accountability to maintain consistency
-  - Users who want to connect with others to share and achieve their self-development goals
+---
 
-### Features
+## **Features**
 
-- As a user, I want to be able to create and track my habits
-- As a user, I want to be able to log my daily reflections in a journal
-- As a user, I want to track my mood to better understand my self-development journey
-- As a user, I want to be able to connect with accountability partners with similar self-development goals
-- As a user, I want to be able to message my accountability partner and check in on each other’s progress
-- As a user, I want to earn badges for consistent habits or journaling entries to stay motivated
+### **Core Features**
+- **Habit Tracker**: Add, update, and delete habits with status tracking (e.g., "In Progress", "Completed").
+- **Journaling**: Secure journaling with mood tracking and prompts for reflection.
+- **Accountability Partners**: Match with users who have similar self-development goals.
+- **Messaging System**: Simple communication with accountability partners.
+- **Gamification**: Badges and rewards for streaks and consistent progress.
 
-## Implementation
+### **Stretch Goals**
+- **Social Challenges**: Join or create group challenges with leaderboards.
+- **User Progress Analytics**: Visualize trends in habits, moods, and goals.
+- **Proximity Matching**: Use location-based matching with GPS or Google Maps APIs.
 
-### Tech Stack
+---
 
-- Frontend: React
-- Backend: Express.js
-- Database: MySQL
-- Client Libraries:
-  - React Router
-  - Axios
-- Server Libraries:
-  - Knex.js
-  - bcrypt (for password hashing)
+## **Implementation**
 
-### APIs
+### **Tech Stack**
+- **Frontend**: React.js (with React Router and Axios for API calls).
+- **Backend**: Express.js with JWT for authentication.
+- **Database**: MySQL (queries managed via Knex.js).
+- **Additional Libraries**:
+  - bcrypt for password hashing.
+  - Chart.js or Recharts for visual analytics.
 
--
+---
 
-### Sitemap
+## **Sitemap**
+1. **Home Page**: Introduction to BuddyQuest.
+2. **Habit Tracker Page**: View, add, and manage habits.
+3. **Journal Page**: Reflect on progress and track mood.
+4. **Accountability Partner Matchmaking Page**: Find partners and message them.
+5. **Register Page**: Create an account.
+6. **Login Page**: Secure login for returning users.
 
-- Home page
-- Habit Tracker page
-- Journal page
-- Accountability Partner Matchmaking page
-- Register page
-- Login page
+---
 
-### Mockups
+## **Mockups**
 
-#### Home Page
-
+### **Home Page**
 ![](../Assets/Homepage.png)
 
-#### Register Page
-
+### **Register Page**
 ![](../Assets/Register.png)
 
-#### Login Page
-
+### **Login Page**
 ![](../Assets/Login.png)
 
-#### AI Visual habits/home Page
-
+### **Habit Tracker Page (AI-Generated Visuals)**
 ![](../Assets/AI%20gen%20Image.webp)
 
- 
-### Data
+---
+
+## **Data**
+
+### **Database Schema**
+- **Users**
+  - `id`, `email`, `password`, `createdAt`.
+- **Habits**
+  - `id`, `userId`, `name`, `frequency`, `createdAt`.
+- **Journal Entries**
+  - `id`, `userId`, `entry`, `mood`, `date`, `createdAt`.
+- **Accountability Partners**
+  - `id`, `userId1`, `userId2`, `habit`, `matchPercentage`.
 
 ![](../Assets/SQL.png)
 
-### Endpoints
+---
 
-## POST /users/register
+## **Endpoints**
 
-Register a new user account.
+### **Authentication**
+- **POST /users/register**
+  - Parameters: `email`, `password`.
+  - Response: `{ "token": "somejwt" }`.
 
-## **Parameters:**
+- **POST /users/login**
+  - Parameters: `email`, `password`.
+  - Response: `{ "token": "somejwt" }`.
 
-- `email`: User's email address
-- `password`: User's password
+### **Habits**
+- **GET /habits**
+  - Parameters: `token`.
+  - Response: List of user's habits.
 
-## **Response:**
+- **POST /habits**
+  - Parameters: `token`, `name`, `frequency`.
+  - Response: Newly created habit.
 
-````json
-{
-    "token": "somejwt"
-}  
-````
+### **Journal**
+- **GET /journal**
+  - Parameters: `token`.
+  - Response: List of user's journal entries.
 
+- **POST /journal**
+  - Parameters: `token`, `entry`, `mood`.
+  - Response: Newly created journal entry.
 
+### **Accountability Partners**
+- **GET /partners**
+  - Parameters: `token`, `goal`.
+  - Response: List of potential accountability partners.
 
-### POST /users/register
-  Register a new user account.
+---
 
-**Parameters:**
-  - `email`: User's email address
-  - `password`: User's password
+## **Roadmap**
 
-**Response:**
-  ```json
-  {
-      "token": "somejwt"
-  }
-````
-## Habits
+### **Frontend Setup**
+1. Set up the React project.
+2. Implement responsive UI for all pages.
+3. Add user authentication and session management.
 
-### GET /habits
+### **Backend Setup**
+1. Create routes for user registration, login, habits, journal, and accountability partners.
+2. Implement JWT authentication.
 
-Get habits for a logged-in user.
+### **Habit Tracker**
+1. Build habit tracking functionality (add, update, delete habits).
+2. Include habit status updates and progress tracking.
 
-**Parameters:**
+### **Journal Feature**
+1. Develop a journaling system with mood tracking.
+2. Allow users to view past entries in calendar and list views.
 
-- `token`: JWT token for the logged-in user
+### **Accountability Partners**
+1. Create matchmaking logic for shared goals.
+2. Build a simple messaging system.
 
-**Response:**
+### **Final Steps**
+1. Conduct thorough testing.
+2. Add analytics and gamification features.
+3. Deploy the app for demo day.
 
-```json
-[
-    {
-        "id": 1,
-        "name": "Meditation",
-        "status": "In Progress"
-    },
-    ...
-]
-````
-## POST /habits
+---
 
-Adds a new habit for the logged-in user.
+## **License**
+BuddyQuest is open source and available under the [MIT License](LICENSE).
 
-### Parameters:
+---
 
-- `token` (required): JWT token for the logged-in user.
-- `name` (required): The name of the habit.
-- `frequency` (required): How often the habit should be tracked.
-
-### Response:
-
-A JSON object representing the newly created habit.
-
-#### Example Response:
-
-```json
-{
-    "id": 1,
-    "name": "Meditation",
-    "status": "In Progress"
-}
-````
-## GET /journal
-
-Gets journal entries for a logged-in user.
-
-### Parameters:
-
-- `token` (required): JWT token for the logged-in user.
-
-### Response:
-
-A JSON array representing the user's journal entries.
-
-#### Example Response:
-
-```json
-[
-    {
-        "id": 1,
-        "entry": "Today was a good day, I meditated for 20 minutes!",
-        "mood": "Happy",
-        "date": "2024-11-01"
-    },
-    ...
-]
-````
-## POST /journal
-
-Adds a new journal entry for the logged-in user.
-
-### Parameters:
-
-- `token` (required): JWT token for the logged-in user.
-- `entry` (required): The text of the journal entry.
-- `mood` (required): Mood scale (e.g., Happy, Sad, Motivated).
-
-### Response:
-
-A JSON object representing the newly created journal entry.
-
-#### Example Response:
-
-```json
-{
-    "id": 1,
-    "entry": "Feeling positive about my goals today!",
-    "mood": "Motivated",
-    "date": "2024-11-01"
-}
-````
-## GET /partners
-
-Gets a list of accountability partners based on matching goals.
-
-### Parameters:
-
-- `token` (required): JWT token for the logged-in user.
-- `goal` (required): Specific self-development goal (e.g., fitness, mindfulness).
-
-### Response:
-
-A JSON array representing a list of accountability partners.
-
-#### Example Response:
-
-```json
-[
-    {
-        "id": 1,
-        "name": "Jane Doe",
-        "goal": "Fitness",
-        "matchPercentage": 80
-    },
-    ...
-]
-````
-## Auth
-
-### JWT Authentication
-
-The JWT token is used for logging in and managing state.
-
-- The token is stored in `localStorage`.
-- It is included in every request to authenticate the logged-in user.
-
-    - Implement login page + form
-    - Create POST /users/login endpoint
-
-## Roadmap
-
-### Frontend Setup
-- Set up the React project
-- Implement user interface for all key pages (login, registration, habit tracking, journal, etc.)
-- Make the user interface responsive for various screen sizes
-
-### Backend Setup
-- Set up the Express.js server
-- Create the necessary routes for user registration, login, habit tracking, journal entries, and accountability partners
-- Implement JWT authentication for secure user login and management
-
-### Habit Tracker
-- Create the habit tracking system, allowing users to:
-  - Add, update, and delete habits
-  - Set habit frequencies and track progress
-  - Enable habit status (e.g., "In Progress", "Completed")
-
-### Journal Feature
-- Implement a journal system where users can:
-  - Add new journal entries with mood tracking
-  - View past journal entries
-
-### Accountability Partners
-- Develop a system to match users with accountability partners based on shared goals (e.g., fitness, mindfulness)
-- Create a messaging feature to allow communication between partners
-
-### Testing
-- Conduct unit tests for individual components and functions
-- Perform integration tests to ensure smooth interaction between the frontend and backend
-- User acceptance testing (UAT) to ensure all features work as expected
-
-### Final Polish and Deployment
-- Finalize user interface design and features
-- Address any bug fixes or issues found during testing
-- Deploy the app to a production environment for demo day
-
-### Nice-to-haves 🔍
-#### Gamification Features:
-- Add badges or rewards for consistent habit tracking or journaling
-- Track and display streaks for habits or journal entries
-
-#### User Progress Analytics: 
-- Provide insights into habit trends, mood changes, and progress over time
-
-#### Social Challenges:
--  Create and join group challenges with leaderboards entries
- #### Proximity-based matching:
-- Integrating GPS or Google Maps APIs
+## **Contact**
+For questions or feedback, email [your-email@example.com](mailto:your-email@example.com).
