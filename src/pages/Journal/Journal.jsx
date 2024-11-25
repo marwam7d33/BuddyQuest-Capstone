@@ -1,7 +1,11 @@
 import React from "react";
 
 function Journal() {
-  return <div></div>;
+  return (
+    <>
+      <h1>Journal</h1>
+    </>
+  );
 }
 
 export default Journal;
