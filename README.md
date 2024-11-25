@@ -7,9 +7,11 @@ BuddyQuest is a self-development platform that helps users track their habits, r
 ## **Overview**
 
 ### **Problem**
+
 Many people struggle to maintain their self-improvement efforts due to a lack of consistent tracking and accountability. While habit trackers and journaling tools exist, they don't always integrate accountability features that help users stay on track. Having an accountability partner can significantly increase the chances of success for self-development goals.
 
 ### **User Profile**
+
 - **Self-improvement seekers**:
   - Individuals looking to track their personal growth through habits and journaling.
   - People who want to stay motivated and need accountability to maintain consistency.
@@ -20,6 +22,7 @@ Many people struggle to maintain their self-improvement efforts due to a lack of
 ## **Features**
 
 ### **Core Features**
+
 - **Habit Tracker**: Add, update, and delete habits with status tracking (e.g., "In Progress", "Completed").
 - **Journaling**: Secure journaling with mood tracking and prompts for reflection.
 - **Accountability Partners**: Match with users who have similar self-development goals.
@@ -27,6 +30,7 @@ Many people struggle to maintain their self-improvement efforts due to a lack of
 - **Gamification**: Badges and rewards for streaks and consistent progress.
 
 ### **Stretch Goals**
+
 - **Social Challenges**: Join or create group challenges with leaderboards.
 - **User Progress Analytics**: Visualize trends in habits, moods, and goals.
 - **Proximity Matching**: Use location-based matching with GPS or Google Maps APIs.
@@ -36,6 +40,7 @@ Many people struggle to maintain their self-improvement efforts due to a lack of
 ## **Implementation**
 
 ### **Tech Stack**
+
 - **Frontend**: React.js (with React Router and Axios for API calls).
 - **Backend**: Express.js with JWT for authentication.
 - **Database**: MySQL (queries managed via Knex.js).
@@ -46,6 +51,7 @@ Many people struggle to maintain their self-improvement efforts due to a lack of
 ---
 
 ## **Sitemap**
+
 1. **Home Page**: Introduction to BuddyQuest.
 2. **Habit Tracker Page**: View, add, and manage habits.
 3. **Journal Page**: Reflect on progress and track mood.
@@ -58,22 +64,27 @@ Many people struggle to maintain their self-improvement efforts due to a lack of
 ## **Mockups**
 
 ### **Home Page**
-![](../Assets/Homepage.png)
+
+![Homepage](./proposal-assets/Homepage.png)
 
 ### **Register Page**
-![](../Assets/Register.png)
+
+![Register](./proposal-assets/Register.png)
 
 ### **Login Page**
-![](../Assets/Login.png)
+
+![Login](./proposal-assets/Login.png)
 
 ### **Habit Tracker Page (AI-Generated Visuals)**
-![](../Assets/AI%20gen%20Image.webp)
+
+![Habit Tracker Page](./proposal-assets/AI%20gen%20Image.webp)
 
 ---
 
 ## **Data**
 
 ### **Database Schema**
+
 - **Users**
   - `id`, `email`, `password`, `createdAt`.
 - **Habits**
@@ -90,7 +101,9 @@ Many people struggle to maintain their self-improvement efforts due to a lack of
 ## **Endpoints**
 
 ### **Authentication**
+
 - **POST /users/register**
+
   - Parameters: `email`, `password`.
   - Response: `{ "token": "somejwt" }`.
 
@@ -99,7 +112,9 @@ Many people struggle to maintain their self-improvement efforts due to a lack of
   - Response: `{ "token": "somejwt" }`.
 
 ### **Habits**
+
 - **GET /habits**
+
   - Parameters: `token`.
   - Response: List of user's habits.
 
@@ -108,7 +123,9 @@ Many people struggle to maintain their self-improvement efforts due to a lack of
   - Response: Newly created habit.
 
 ### **Journal**
+
 - **GET /journal**
+
   - Parameters: `token`.
   - Response: List of user's journal entries.
 
@@ -117,6 +134,7 @@ Many people struggle to maintain their self-improvement efforts due to a lack of
   - Response: Newly created journal entry.
 
 ### **Accountability Partners**
+
 - **GET /partners**
   - Parameters: `token`, `goal`.
   - Response: List of potential accountability partners.
@@ -147,10 +165,7 @@ Many people struggle to maintain their self-improvement efforts due to a lack of
 2. Build a simple messaging system.
 
 ### **Final Steps**
+
 1. Conduct thorough testing.
 2. Add analytics and gamification features.
 3. Deploy the app for demo day.
-
----
-
-  
