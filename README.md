@@ -65,19 +65,19 @@ Many people struggle to maintain their self-improvement efforts due to a lack of
 
 ### **Home Page**
 
-![](../Assets/Homepage.png)
+![Homepage](./proposal-assets/Homepage.png)
 
 ### **Register Page**
 
-![](../Assets/Register.png)
+![Register](./proposal-assets/Register.png)
 
 ### **Login Page**
 
-![](../Assets/Login.png)
+![Login](./proposal-assets/Login.png)
 
 ### **Habit Tracker Page (AI-Generated Visuals)**
 
-![](../Assets/AI%20gen%20Image.webp)
+![Habit Tracker Page](./proposal-assets/AI%20gen%20Image.webp)
 
 ---
 
