@@ -1,67 +1,72 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "./Home.scss"; // Optional, for SCSS styling specific to the homepage
+import "./Home.scss"; // SCSS for styling
 import HabitTracker from "../HabitTracker/HabitTracker";
 
 const Home = () => {
-  const navigate = useNavigate(); // For programmatic navigation
+  const navigate = useNavigate();
   const [mood, setMood] = useState("");
 
   const handleEmojiClick = (selectedMood) => {
-    setMood(selectedMood); // Optional: Set the mood for display or future use
-    navigate("/journal"); // Navigate to the journal page
+    setMood(selectedMood);
+    navigate("/journal");
   };
 
   return (
-    <div className="home-page">
-      <h1>Welcome to Your Habit Tracker</h1>
+    <div className="home">
+      <h1 className="home__title">BuddyQuest</h1>
+      <p>Team up, conquer habits, and achieve goals together!</p>
       <HabitTracker />
 
-      <div className="mood-selection">
-        <h2>How are you feeling today?</h2>
-        <div className="emoji-container">
-          <span
-            onClick={() => handleEmojiClick("happy")}
-            role="img"
-            aria-label="Happy"
-          >
-            😊
-          </span>
-          <span
-            onClick={() => handleEmojiClick("neutral")}
-            role="img"
-            aria-label="Neutral"
-          >
-            😐
-          </span>
-          <span
-            onClick={() => handleEmojiClick("sad")}
-            role="img"
-            aria-label="Sad"
-          >
-            😢
-          </span>
-          <span
-            onClick={() => handleEmojiClick("angry")}
-            role="img"
-            aria-label="Angry"
-          >
-            😡
-          </span>
-          <span
-            onClick={() => handleEmojiClick("excited")}
-            role="img"
-            aria-label="Excited"
-          >
-            🤩
-          </span>
+      {/* Mood Selector Section */}
+      <div className="home__mood">
+        <h2 className="home__mood-title">How are you feeling today?</h2>
+        <div className="home__emoji-container">
+          {[
+            { mood: "happy", emoji: "😊", label: "Happy" },
+            { mood: "neutral", emoji: "😐", label: "Neutral" },
+            { mood: "sad", emoji: "😢", label: "Sad" },
+            { mood: "angry", emoji: "😡", label: "Angry" },
+            { mood: "excited", emoji: "🤩", label: "Excited" },
+          ].map(({ mood, emoji, label }) => (
+            <span
+              key={mood}
+              className={`home__emoji home__emoji--${mood}`}
+              onClick={() => handleEmojiClick(mood)}
+              role="img"
+              aria-label={label}
+            >
+              {emoji}
+            </span>
+          ))}
         </div>
       </div>
 
-      <div>
-        <Link to="/journal">
-          <button>Go to Journal</button>
+      {/* Partner Section */}
+      <div className="home__partner">
+        <h2 className="home__section-title">Partner with a Friend</h2>
+        <p className="home__section-description">
+          Find friends with similar habits and start exciting challenges
+          together!
+        </p>
+        <Link to="/partner">
+          <button className="home__button home__button--secondary">
+            Partner Now
+          </button>
         </Link>
+      </div>
+
+      {/* Chat Section */}
+      <div className="home__chat">
+        <h2 className="home__section-title">Chat with Partners</h2>
+        <p className="home__section-description">
+          Stay connected with your partners and share your progress.
+        </p>
+        <div className="home__chat-bubble">
+          <Link to="/chat" className="home__chat-link">
+            💬
+          </Link>
+        </div>
       </div>
     </div>
   );
