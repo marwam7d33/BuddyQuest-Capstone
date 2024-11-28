@@ -63,7 +63,7 @@ const HabitTracker = () => {
     });
     setHabits(updatedHabit);
 
-    // Update the habit progress in the database (assuming PUT request to update habit)
+    // Update the habit progress in the database
     try {
       await axios.put(`${BASE_URL}/habits/${habitId}`, {
         progress: 100,
