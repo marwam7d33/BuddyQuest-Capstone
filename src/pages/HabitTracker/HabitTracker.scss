@@ -17,6 +17,11 @@
     margin: 10px auto;
     cursor: pointer;
     text-align: center;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #45a049; // Hover effect for add button
+    }
   }
 
   &__habit-list {
@@ -29,9 +34,10 @@
     margin-bottom: 15px;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
 
     &.completed {
-      background-color: #d4edda;
+      background-color: #d4edda; // Light green for completed
     }
   }
 
@@ -63,13 +69,26 @@
 
   &__progress-bar {
     height: 100%;
-    background-color: #4caf50;
     border-radius: 4px;
+    transition: background-color 0.3s ease;
+
+    &--high {
+      background-color: #4caf50; // Green for high progress
+    }
+
+    &--medium {
+      background-color: #ff9800; // Orange for medium progress
+    }
+
+    &--low {
+      background-color: #f44336; // Red for low progress
+    }
   }
 
   &__habit-item--details {
     font-size: 14px;
     color: #555;
+    margin-top: 8px;
   }
 
   &__modal {
@@ -116,10 +135,36 @@
     border: none;
     cursor: pointer;
     text-align: center;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #45a049; // Hover effect for form buttons
+    }
   }
 
   &__button--close {
     background-color: #f44336;
+    transition: background-color 0.3s ease;
+
+    &:hover {
+      background-color: #e53935; // Darker red for close button hover
+    }
+  }
+
+  &__modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  &__modal-close {
+    cursor: pointer;
+    font-size: 20px;
+    color: #333;
+
+    &:hover {
+      color: #f44336; // Red color for close button
+    }
   }
 }
 
@@ -130,5 +175,11 @@
 
   .habit-tracker__habit-name {
     font-size: 16px;
+  }
+
+  .habit-tracker__button {
+    font-size: 14px;
+    padding: 8px;
+    width: 100%;
   }
 }

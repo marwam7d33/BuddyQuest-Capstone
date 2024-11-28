@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import DatePicker from "react-datepicker"; // For calendar date picker
-import "react-datepicker/dist/react-datepicker.css"; // Import calendar styles
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css"; // Don't forget to import the date picker styles
 import "./HabitTracker.scss";
 
 const HabitTracker = () => {
@@ -11,6 +11,7 @@ const HabitTracker = () => {
   const [habitFrequency, setHabitFrequency] = useState("Daily");
   const [startDate, setStartDate] = useState(new Date());
   const [modalOpen, setModalOpen] = useState(false);
+  const [currentHabit, setCurrentHabit] = useState(null); // To store the habit being edited
   const BASE_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
@@ -54,6 +55,39 @@ const HabitTracker = () => {
     }
   };
 
+  const updateHabit = async (e) => {
+    e.preventDefault();
+    if (!habitName.trim()) {
+      alert("Please enter a valid habit name.");
+      return;
+    }
+
+    const updatedHabit = {
+      id: currentHabit.id,
+      name: habitName,
+      frequency: habitFrequency,
+      start_date: startDate.toISOString().split("T")[0],
+      end_date: "2024-12-31",
+    };
+
+    try {
+      const response = await axios.put(
+        `${BASE_URL}/habits/${currentHabit.id}`,
+        updatedHabit
+      );
+      const updatedHabits = habits.map((habit) =>
+        habit.id === currentHabit.id ? { ...habit, ...updatedHabit } : habit
+      );
+      setHabits(updatedHabits); // Update the local state with the updated habit
+      setHabitName("");
+      setHabitFrequency("Daily");
+      setModalOpen(false); // Close the modal after updating
+      setCurrentHabit(null); // Clear the current habit state
+    } catch (error) {
+      console.error("Error updating habit:", error);
+    }
+  };
+
   const markComplete = async (habitId) => {
     const updatedHabit = habits.map((habit) => {
       if (habit.id === habitId) {
@@ -63,7 +97,6 @@ const HabitTracker = () => {
     });
     setHabits(updatedHabit);
 
-    // Update the habit progress in the database
     try {
       await axios.put(`${BASE_URL}/habits/${habitId}`, {
         progress: 100,
@@ -77,6 +110,14 @@ const HabitTracker = () => {
   const formatDate = (date) => {
     const options = { year: "numeric", month: "long", day: "numeric" };
     return new Date(date).toLocaleDateString(undefined, options);
+  };
+
+  const openEditModal = (habit) => {
+    setHabitName(habit.name);
+    setHabitFrequency(habit.frequency);
+    setStartDate(new Date(habit.start_date));
+    setCurrentHabit(habit); // Store the habit being edited
+    setModalOpen(true); // Open the modal
   };
 
   if (loading) {
@@ -110,12 +151,32 @@ const HabitTracker = () => {
                 className="habit-tracker__checkbox"
               />
               <span className="habit-tracker__habit-name">{habit.name}</span>
+              <button
+                className="habit-tracker__edit-button"
+                onClick={() => openEditModal(habit)}
+              >
+                Edit
+              </button>
+              <button
+                className="habit-tracker__delete-button"
+                onClick={() => deleteHabit(habit.id)}
+              >
+                Delete
+              </button>
             </div>
 
             <div className="habit-tracker__habit-progress">
               <div
                 className="habit-tracker__progress-bar"
-                style={{ width: `${habit.progress}%` }}
+                style={{
+                  width: `${habit.progress}%`,
+                  backgroundColor:
+                    habit.progress === 0
+                      ? "#d3d3d3"
+                      : habit.progress === 100
+                      ? "#4caf50"
+                      : "#f0f0f0",
+                }}
               />
             </div>
 
@@ -129,7 +190,10 @@ const HabitTracker = () => {
       {modalOpen && (
         <div className="habit-tracker__modal">
           <div className="habit-tracker__form-container">
-            <form className="habit-tracker__form" onSubmit={addHabit}>
+            <form
+              className="habit-tracker__form"
+              onSubmit={currentHabit ? updateHabit : addHabit}
+            >
               <input
                 type="text"
                 value={habitName}
@@ -152,7 +216,7 @@ const HabitTracker = () => {
                 className="habit-tracker__calendar"
               />
               <button className="habit-tracker__button" type="submit">
-                Save
+                {currentHabit ? "Update" : "Save"}
               </button>
               <button
                 className="habit-tracker__button habit-tracker__button--close"
