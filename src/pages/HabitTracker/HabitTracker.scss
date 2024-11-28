@@ -1,34 +1,134 @@
 .habit-tracker {
-  margin: 20px;
-  padding: 20px;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 300px;
-
-  h2 {
-    font-size: 1.5rem;
-    margin-bottom: 15px;
+  &__header {
+    font-size: 24px;
+    text-align: center;
+    font-weight: bold;
   }
 
-  ul {
-    list-style-type: none;
-    padding: 0;
+  &__add-button {
+    font-size: 16px;
+    background-color: #4caf50;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 10px 0;
+    display: block;
+    width: 200px;
+    margin: 10px auto;
+    cursor: pointer;
+    text-align: center;
+  }
 
-    li {
-      display: flex;
-      align-items: center;
-      margin-bottom: 10px;
-      font-size: 1.1rem;
+  &__habit-list {
+    margin-top: 20px;
+  }
 
-      input {
-        margin-right: 10px;
-      }
+  &__habit-item {
+    background-color: #f9f9f9;
+    padding: 15px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
-      &.completed {
-        text-decoration: line-through;
-        color: #6c757d;
-      }
+    &.completed {
+      background-color: #d4edda;
     }
+  }
+
+  &__item-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__checkbox {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+  }
+
+  &__habit-name {
+    font-size: 18px;
+    flex-grow: 1;
+    font-weight: 500;
+  }
+
+  &__habit-progress {
+    margin-top: 10px;
+    background-color: #f0f0f0;
+    border-radius: 4px;
+    height: 10px;
+    width: 100%;
+  }
+
+  &__progress-bar {
+    height: 100%;
+    background-color: #4caf50;
+    border-radius: 4px;
+  }
+
+  &__habit-item--details {
+    font-size: 14px;
+    color: #555;
+  }
+
+  &__modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 100;
+  }
+
+  &__form-container {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 400px;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+
+  &__form input,
+  &__form select,
+  &__calendar {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+  }
+
+  &__button {
+    background-color: #4caf50;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  &__button--close {
+    background-color: #f44336;
+  }
+}
+
+@media (max-width: 768px) {
+  .habit-tracker__habit-item {
+    padding: 10px;
+  }
+
+  .habit-tracker__habit-name {
+    font-size: 16px;
   }
 }
