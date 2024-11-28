@@ -39,7 +39,7 @@ const HabitTracker = () => {
       user_id: 1, // Example user ID
       name: habitName,
       frequency: habitFrequency,
-      progress: 0,
+      progress: 0, // Ensure progress is always 0 when adding
       start_date: startDate.toISOString().split("T")[0],
       end_date: "2024-12-31",
     };
@@ -68,6 +68,7 @@ const HabitTracker = () => {
       frequency: habitFrequency,
       start_date: startDate.toISOString().split("T")[0],
       end_date: "2024-12-31",
+      progress: currentHabit.progress,
     };
 
     try {
@@ -87,20 +88,26 @@ const HabitTracker = () => {
       console.error("Error updating habit:", error);
     }
   };
-
+  //revisit this fnx
   const markComplete = async (habitId) => {
     const updatedHabit = habits.map((habit) => {
       if (habit.id === habitId) {
-        return { ...habit, progress: 100, completed: !habit.completed };
+        //revisit
+        // Toggle the 'completed' status and adjust progress accordingly
+        const newProgress = habit.completed ? 0 : 100;
+        const newCompleted = !habit.completed;
+
+        return { ...habit, progress: newProgress, completed: newCompleted };
       }
       return habit;
     });
+
     setHabits(updatedHabit);
 
     try {
       await axios.put(`${BASE_URL}/habits/${habitId}`, {
-        progress: 100,
-        completed: true,
+        progress: updatedHabit.find((habit) => habit.id === habitId).progress,
+        completed: updatedHabit.find((habit) => habit.id === habitId).completed,
       });
     } catch (error) {
       console.error("Error updating habit:", error);
@@ -111,7 +118,7 @@ const HabitTracker = () => {
     const options = { year: "numeric", month: "long", day: "numeric" };
     return new Date(date).toLocaleDateString(undefined, options);
   };
-
+  //edit modal form
   const openEditModal = (habit) => {
     setHabitName(habit.name);
     setHabitFrequency(habit.frequency);
@@ -124,6 +131,17 @@ const HabitTracker = () => {
     return <p>Loading habits...</p>;
   }
 
+  // Delete a habit
+  const deleteHabit = async (habitId) => {
+    try {
+      await axios.delete(`${BASE_URL}/habits/${habitId}`);
+
+      // Update the local state to remove the deleted habit
+      setHabits(habits.filter((habit) => habit.id !== habitId));
+    } catch (error) {
+      console.error("Error deleting habit:", error);
+    }
+  };
   return (
     <div className="habit-tracker">
       <div className="habit-tracker__header">Habit Tracker</div>
@@ -147,6 +165,8 @@ const HabitTracker = () => {
               <input
                 type="checkbox"
                 checked={habit.completed}
+                //toggle
+                //revisit
                 onChange={() => markComplete(habit.id)}
                 className="habit-tracker__checkbox"
               />
