@@ -144,7 +144,7 @@ const HabitTracker = () => {
   };
   return (
     <div className="habit-tracker">
-      <div className="habit-tracker__header">Habit Tracker</div>
+      <div className="habit-tracker__header"></div>
 
       <button
         className="habit-tracker__add-button"

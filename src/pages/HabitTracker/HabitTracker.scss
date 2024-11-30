@@ -1,43 +1,57 @@
 .habit-tracker {
+  padding: 20px;
+  background-color: #f9f9f9;
+
   &__header {
-    font-size: 24px;
     text-align: center;
-    font-weight: bold;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    font-family: "Arial", sans-serif;
   }
 
   &__add-button {
-    font-size: 16px;
-    background-color: #4caf50;
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
-    margin: 10px 0;
     display: block;
-    width: 200px;
-    margin: 10px auto;
+    margin: 10px auto 20px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #ffeb3b;
+    color: #333;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
-    text-align: center;
-    transition: background-color 0.3s ease;
+    font-weight: bold;
+    transition: transform 0.2s;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 
     &:hover {
-      background-color: #45a049; // Hover effect for add button
+      transform: scale(1.05);
     }
   }
 
   &__habit-list {
-    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
   }
 
   &__habit-item {
-    background-color: #f9f9f9;
+    background-color: #fff7ae;
+    width: 200px;
     padding: 15px;
-    margin-bottom: 15px;
     border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    transition: background-color 0.3s ease;
+    box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3);
+    position: relative;
+    font-family: "Comic Sans MS", cursive, sans-serif;
 
     &.completed {
-      background-color: #d4edda; // Light green for completed
+      background-color: #c8e6c9;
+    }
+
+    &--details {
+      font-size: 0.9rem;
+      color: #555;
+      margin-top: 10px;
     }
   }
 
@@ -45,141 +59,91 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-  }
+    margin-bottom: 10px;
 
-  &__checkbox {
-    width: 24px;
-    height: 24px;
-    margin-right: 10px;
-  }
+    .habit-tracker__checkbox {
+      margin-right: 10px;
+    }
 
-  &__habit-name {
-    font-size: 18px;
-    flex-grow: 1;
-    font-weight: 500;
+    .habit-tracker__habit-name {
+      font-weight: bold;
+      flex: 1;
+    }
+
+    .habit-tracker__edit-button,
+    .habit-tracker__delete-button {
+      background: none;
+      border: none;
+      color: #333;
+      cursor: pointer;
+      font-size: 0.8rem;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
   }
 
   &__habit-progress {
-    margin-top: 10px;
-    background-color: #f0f0f0;
-    border-radius: 4px;
     height: 10px;
-    width: 100%;
-  }
+    background-color: #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 5px;
 
-  &__progress-bar {
-    height: 100%;
-    border-radius: 4px;
-    transition: background-color 0.3s ease;
-
-    &--high {
-      background-color: #4caf50; // Green for high progress
+    .habit-tracker__progress-bar {
+      height: 100%;
+      border-radius: 5px;
     }
-
-    &--medium {
-      background-color: #ff9800; // Orange for medium progress
-    }
-
-    &--low {
-      background-color: #f44336; // Red for low progress
-    }
-  }
-
-  &__habit-item--details {
-    font-size: 14px;
-    color: #555;
-    margin-top: 8px;
   }
 
   &__modal {
-    display: flex;
-    justify-content: center;
-    align-items: center;
     position: fixed;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 100;
-  }
-
-  &__form-container {
-    background-color: white;
-    padding: 20px;
-    border-radius: 8px;
     width: 100%;
-    max-width: 400px;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    &__form-container {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
   }
 
   &__form {
     display: flex;
     flex-direction: column;
-    gap: 15px;
-  }
+    gap: 10px;
 
-  &__form input,
-  &__form select,
-  &__calendar {
-    padding: 10px;
-    font-size: 16px;
-    border-radius: 5px;
-    border: 1px solid #ddd;
-  }
-
-  &__button {
-    background-color: #4caf50;
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
-    border: none;
-    cursor: pointer;
-    text-align: center;
-    transition: background-color 0.3s ease;
-
-    &:hover {
-      background-color: #45a049; // Hover effect for form buttons
+    input,
+    select,
+    .habit-tracker__calendar {
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
     }
-  }
 
-  &__button--close {
-    background-color: #f44336;
-    transition: background-color 0.3s ease;
+    .habit-tracker__button {
+      padding: 10px 15px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
 
-    &:hover {
-      background-color: #e53935; // Darker red for close button hover
+      &--close {
+        background-color: #f44336;
+        color: white;
+
+        &:hover {
+          background-color: #d32f2f;
+        }
+      }
     }
-  }
-
-  &__modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-
-  &__modal-close {
-    cursor: pointer;
-    font-size: 20px;
-    color: #333;
-
-    &:hover {
-      color: #f44336; // Red color for close button
-    }
-  }
-}
-
-@media (max-width: 768px) {
-  .habit-tracker__habit-item {
-    padding: 10px;
-  }
-
-  .habit-tracker__habit-name {
-    font-size: 16px;
-  }
-
-  .habit-tracker__button {
-    font-size: 14px;
-    padding: 8px;
-    width: 100%;
   }
 }
