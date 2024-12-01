@@ -56,18 +56,22 @@ const Journal = () => {
   return (
     <section className="Journal__wrapper">
       <div className="journal-page">
-        <div className="journal-header">
+        <div className="journal-page__header">
           <input
             type="date"
             value={entryDate}
             onChange={(e) => setEntryDate(e.target.value)}
+            className="journal-page__header__date"
           />
-          <div className="mood-selector">
-            <label htmlFor="mood">Select Mood:</label>
+          <div className="journal-page__mood">
+            <label htmlFor="mood" className="journal-page__mood__label">
+              Select Mood:
+            </label>
             <select
               id="mood"
               value={mood}
               onChange={(e) => setMood(e.target.value)}
+              className="journal-page__mood__select"
               required
             >
               <option value="">Select your mood</option>
@@ -79,13 +83,14 @@ const Journal = () => {
             </select>
           </div>
         </div>
-        <div className="title-container">
+
+        <div className="journal-page__title">
           <input
             type="text"
             placeholder="Title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            className="journal-title"
+            className="journal-page__title__input"
           />
         </div>
 
@@ -94,13 +99,19 @@ const Journal = () => {
           rows="8"
           value={journalEntry}
           onChange={(e) => setJournalEntry(e.target.value)}
+          className="journal-page__textarea"
         />
 
-        <button type="submit" onClick={handleSubmit} disabled={isSubmitting}>
+        <button
+          type="submit"
+          onClick={handleSubmit}
+          className="journal-page__button"
+          disabled={isSubmitting}
+        >
           {isSubmitting ? "Saving..." : "Save"}
         </button>
-
-     </section>
+      </div>
+    </section>
   );
 };
 

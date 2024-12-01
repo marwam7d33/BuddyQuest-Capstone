@@ -1,6 +1,6 @@
 .habit-tracker {
   padding: 20px;
-  background-color: #f9f9f9;
+  background-color: #e8eee8;
 
   &__header {
     text-align: center;
@@ -14,8 +14,8 @@
     margin: 10px auto 20px;
     padding: 10px 20px;
     font-size: 1rem;
-    background-color: #ffeb3b;
-    color: #333;
+    background-color: #0c790f;
+    color: white;
     border: none;
     border-radius: 5px;
     cursor: pointer;
@@ -36,8 +36,7 @@
   }
 
   &__habit-item {
-    background-color: #fff7ae;
-    width: 200px;
+    background-color: #f7f7f7;
     padding: 15px;
     border-radius: 8px;
     box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3);

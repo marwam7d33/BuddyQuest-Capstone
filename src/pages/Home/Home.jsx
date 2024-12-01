@@ -3,6 +3,7 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import "./Home.scss"; // SCSS for styling
 import HabitTracker from "../HabitTracker/HabitTracker";
 import PrimarySearchAppBar from "../../components/PrimarySearchAppBar/PrimarySearchAppBar.jsx"; // Corrected import for default export
+import SimpleBottomNavigation from "../../components/SimpleBottomNavigation/SimpleBottomNavigation"; // Adjust the path as needed
 
 const Home = () => {
   const navigate = useNavigate();
@@ -50,35 +51,6 @@ const Home = () => {
           </div>
         </div>
       )}
-
-      {/* Partner Section */}
-      <div className="home__partner">
-        <h2 className="home__section-title">Partner with a Friend</h2>
-        <p className="home__section-description">
-          Find friends with similar habits and start exciting challenges
-          together!
-        </p>
-        <Link to="/partner">
-          <button className="home__button home__button--secondary">
-            Partner Now
-          </button>
-        </Link>
-      </div>
-
-      {/* Chat Section */}
-      <div className="home__chat">
-        <h2 className="home__section-title">Chat with Partners</h2>
-        <p className="home__section-description">
-          Stay connected with your partners and share your progress.
-        </p>
-        {isHomepage && (
-          <div className="home__chat-bubble">
-            <Link to="/chat" className="home__chat-link">
-              💬
-            </Link>
-          </div>
-        )}
-      </div>
     </div>
   );
 };
