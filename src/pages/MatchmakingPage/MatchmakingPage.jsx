@@ -1,229 +1,146 @@
-import React, { useState, useEffect } from "react";
-import {
-  Card,
-  CardHeader,
-  CardContent,
-  Typography,
-  Button,
-  TextField,
-} from "@mui/material";
-import axios from "axios";
+import React, { useState } from "react";
+import "./MatchmakingPage.scss";
 
 const MatchmakingPage = () => {
-  const [partners, setPartners] = useState([]); // Store fetched matchmaking pairs
-  const [users, setUsers] = useState([]); // Store users (for dropdown)
-  const [habits, setHabits] = useState([]); // Store habits (for dropdown)
-  const [matchCriteria, setMatchCriteria] = useState({
-    userId: "",
-    partnerId: "",
-    habitId: "",
-  });
+  const [users] = useState([
+    {
+      id: 1,
+      name: "John Doe",
+      email: "john@example.com",
+      location: "New York",
+      avatar: "https://api.dicebear.com/7.x/personas/svg?seed=John",
+    },
+    {
+      id: 2,
+      name: "Jane Smith",
+      email: "jane@example.com",
+      location: "San Francisco",
+      avatar: "https://api.dicebear.com/7.x/personas/svg?seed=Jane",
+    },
+    {
+      id: 3,
+      name: "Mike Johnson",
+      email: "mike@example.com",
+      location: "Chicago",
+      avatar: "https://api.dicebear.com/7.x/personas/svg?seed=Mike",
+    },
+    {
+      id: 4,
+      name: "Sarah Williams",
+      email: "sarah@example.com",
+      location: "Boston",
+      avatar: "https://api.dicebear.com/7.x/personas/svg?seed=Sarah",
+    },
+  ]);
 
-  useEffect(() => {
-    // Fetch matchmaking pairs, users, and habits
-    const fetchData = async () => {
-      try {
-        // Get all matchmaking pairs
-        const matchmakingResponse = await axios.get(
-          "http://localhost:8080/matchmaking"
-        );
-        setPartners(matchmakingResponse.data);
+  const [habits] = useState([
+    {
+      id: 1,
+      user_id: 1,
+      name: "Morning Exercise",
+      category: "Fitness",
+      icon: "🏋️",
+    },
+    {
+      id: 2,
+      user_id: 1,
+      name: "Reading",
+      category: "Personal Development",
+      icon: "📖",
+    },
+    { id: 3, user_id: 2, name: "Meditation", category: "Wellness", icon: "🧘" },
+    { id: 4, user_id: 2, name: "Yoga", category: "Fitness", icon: "🤸" },
+    {
+      id: 5,
+      user_id: 3,
+      name: "Coding",
+      category: "Professional Development",
+      icon: "💻",
+    },
+    { id: 6, user_id: 3, name: "Running", category: "Fitness", icon: "🏃" },
+    { id: 7, user_id: 4, name: "Cooking", category: "Lifestyle", icon: "👨‍🍳" },
+    { id: 8, user_id: 4, name: "Traveling", category: "Lifestyle", icon: "🌍" },
+  ]);
 
-        // Get all users (you might have a separate endpoint for users)
-        const usersResponse = await axios.get("http://localhost:8080/users");
-        setUsers(usersResponse.data);
+  const [currentUser] = useState(users[0]);
 
-        // Get all habits (you might have a separate endpoint for habits)
-        const habitsResponse = await axios.get("http://localhost:8080/habits");
-        setHabits(habitsResponse.data);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      }
-    };
-    fetchData();
-  }, []);
-
-  // Handle creating a new matchmaking pair
-  const handleCreatePair = async () => {
-    if (
-      !matchCriteria.userId ||
-      !matchCriteria.partnerId ||
-      !matchCriteria.habitId
-    ) {
-      alert("Please select a user, partner, and habit.");
-      return;
-    }
-
-    try {
-      const response = await axios.post("http://localhost:8080/matchmaking", {
-        user_id: matchCriteria.userId,
-        partner_id: matchCriteria.partnerId,
-        habit_id: matchCriteria.habitId,
-      });
-      setPartners([...partners, response.data]); // Add the new pair to the state
-      alert("New matchmaking pair created!");
-    } catch (error) {
-      console.error("Error creating matchmaking pair:", error);
-    }
+  const findPotentialMatches = () => {
+    return users
+      .filter((user) => user.id !== currentUser.id)
+      .map((user) => ({
+        user,
+        compatibilityPercentage: 80,
+      }));
   };
 
   return (
-    <div className="container mx-auto p-4">
-      <div className="grid md:grid-cols-2 gap-6">
-        {/* Existing Matchmaking Pairs */}
-        <Card sx={{ boxShadow: 3, borderRadius: 2 }}>
-          <CardHeader
-            title="Accountability Partners"
-            subheader="These are your current accountability partners"
-            sx={{
-              backgroundColor: "rgba(0, 128, 0, 0.1)",
-              color: "green",
-              borderBottom: "2px solid green",
-            }}
-          />
-          <CardContent>
-            {partners.map((pair) => (
-              <div key={pair.id} className="mb-4">
-                <Typography
-                  variant="h6"
-                  sx={{ fontWeight: "bold", color: "green" }}
-                >
-                  Partner Pair: User {pair.user_id} and User {pair.partner_id}
-                </Typography>
-                <Typography variant="body2" sx={{ color: "#555" }}>
-                  Habit ID: {pair.habit_id}
-                </Typography>
-                <Button
-                  variant="outlined"
-                  sx={{
-                    borderColor: "green",
-                    color: "green",
-                    marginTop: "10px",
-                  }}
-                >
-                  View Profile
-                </Button>
-              </div>
-            ))}
-          </CardContent>
-        </Card>
-
-        {/* Form to Create New Matchmaking Pair */}
-        <Card sx={{ boxShadow: 3, borderRadius: 2 }}>
-          <CardHeader
-            title="Find Accountability Partner"
-            subheader="Create a new matchmaking pair"
-            sx={{
-              backgroundColor: "rgba(0, 128, 0, 0.1)",
-              color: "green",
-              borderBottom: "2px solid green",
-            }}
-          />
-          <CardContent>
-            <div>
-              <Typography
-                variant="body1"
-                sx={{ fontWeight: "bold", color: "green" }}
-              >
-                Select User
-              </Typography>
-              <TextField
-                select
-                fullWidth
-                value={matchCriteria.userId}
-                onChange={(e) =>
-                  setMatchCriteria({ ...matchCriteria, userId: e.target.value })
-                }
-                sx={{
-                  backgroundColor: "#f4f4f4",
-                  borderRadius: 1,
-                  marginTop: 2,
-                }}
-              >
-                {users.map((user) => (
-                  <option key={user.id} value={user.id}>
-                    {user.name}
-                  </option>
-                ))}
-              </TextField>
-            </div>
-
-            <div className="mt-4">
-              <Typography
-                variant="body1"
-                sx={{ fontWeight: "bold", color: "green" }}
-              >
-                Select Partner
-              </Typography>
-              <TextField
-                select
-                fullWidth
-                value={matchCriteria.partnerId}
-                onChange={(e) =>
-                  setMatchCriteria({
-                    ...matchCriteria,
-                    partnerId: e.target.value,
-                  })
-                }
-                sx={{
-                  backgroundColor: "#f4f4f4",
-                  borderRadius: 1,
-                  marginTop: 2,
-                }}
-              >
-                {users.map((user) => (
-                  <option key={user.id} value={user.id}>
-                    {user.name}
-                  </option>
-                ))}
-              </TextField>
-            </div>
-
-            <div className="mt-4">
-              <Typography
-                variant="body1"
-                sx={{ fontWeight: "bold", color: "green" }}
-              >
-                Select Habit
-              </Typography>
-              <TextField
-                select
-                fullWidth
-                value={matchCriteria.habitId}
-                onChange={(e) =>
-                  setMatchCriteria({
-                    ...matchCriteria,
-                    habitId: e.target.value,
-                  })
-                }
-                sx={{
-                  backgroundColor: "#f4f4f4",
-                  borderRadius: 1,
-                  marginTop: 2,
-                }}
-              >
-                {habits.map((habit) => (
-                  <option key={habit.id} value={habit.id}>
-                    {habit.name}
-                  </option>
-                ))}
-              </TextField>
-            </div>
-
-            <Button
-              variant="contained"
-              sx={{
-                backgroundColor: "green",
-                color: "white",
-                marginTop: "10px",
-              }}
-              onClick={handleCreatePair}
-            >
-              Create Match
-            </Button>
-          </CardContent>
-        </Card>
+    <div className="matchmaking-page">
+      <div className="profile-section">
+        <img src={currentUser.avatar} alt="User Avatar" className="avatar" />
+        <div className="user-info">
+          <h2>{currentUser.name}</h2>
+          <p>{currentUser.location}</p>
+          <div className="habits">
+            {habits
+              .filter((habit) => habit.user_id === currentUser.id)
+              .map((habit) => (
+                <span key={habit.id} className="habit-tag">
+                  {habit.name}
+                </span>
+              ))}
+          </div>
+        </div>
       </div>
+
+      <div className="accountability-partner">
+        <h3>Accountability Partners</h3>
+        {/* Map through current user's accountability partners */}
+        {/* Placeholder for actual partner data */}
+        <div className="partner-card">
+          <img
+            src="https://api.dicebear.com/7.x/personas/svg?seed=Partner"
+            alt="Partner Avatar"
+            className="partner-avatar"
+          />
+          <div className="partner-info">
+            <h4>Chris Evans</h4>
+            <p>Fitness Partner</p>
+            <p className="progress">Progress: 85%</p>
+          </div>
+          <button className="progress-btn">View Progress</button>
+        </div>
+      </div>
+
+      <div className="matches-section">
+        <h3>Potential Matches</h3>
+        {findPotentialMatches().map((match) => (
+          <div className="match-card" key={match.user.id}>
+            <div className="user-info">
+              <img
+                src={match.user.avatar}
+                alt="User Avatar"
+                className="avatar"
+              />
+              <div className="info">
+                <h3>{match.user.name}</h3>
+                <p>{match.user.location}</p>
+              </div>
+            </div>
+            <div className="compatibility">
+              <span className="icon">💯</span>
+              <span className="percentage">
+                {match.compatibilityPercentage}%
+              </span>
+            </div>
+            <div className="actions">
+              <button className="match-button">Match</button>
+              <button className="chat-button">Chat</button>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <button className="find-matches-btn">Find Matches</button>
     </div>
   );
 };
