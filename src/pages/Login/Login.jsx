@@ -5,6 +5,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"; // Import Font
 import { faGoogle } from "@fortawesome/free-brands-svg-icons"; // Import Google icon
 import "./Login.scss"; // Import styles
 
+const BASE_URL = import.meta.env.VITE_API_URL;
+
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");

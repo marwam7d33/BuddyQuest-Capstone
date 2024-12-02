@@ -10,7 +10,7 @@ const Profile = () => {
     const fetchUser = async () => {
       try {
         const response = await axios.get("http://localhost:8080/auth/profile", {
-          withCredentials: true, // Ensure cookies are sent with the request
+          withCredentials: true, //  
         });
         setUser(response.data.profile); // Set user data
       } catch (err) {
@@ -29,8 +29,7 @@ const Profile = () => {
   return (
     <div>
       <h2>Welcome, {user.username}</h2>
-      {/* Assuming email exists in the user object */}
-      <p>Email: {user.email || "No email available"}</p>
+       <p>Email: {user.email || "No email available"}</p>
       <button
         onClick={async () => {
           try {

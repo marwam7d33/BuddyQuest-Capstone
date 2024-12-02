@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css"; // Don't forget to import the date picker styles
+import "react-datepicker/dist/react-datepicker.css"; 
 import "./HabitTracker.scss";
 
 const HabitTracker = () => {
@@ -11,7 +11,7 @@ const HabitTracker = () => {
   const [habitFrequency, setHabitFrequency] = useState("Daily");
   const [startDate, setStartDate] = useState(new Date());
   const [modalOpen, setModalOpen] = useState(false);
-  const [currentHabit, setCurrentHabit] = useState(null); // To store the habit being edited
+  const [currentHabit, setCurrentHabit] = useState(null); 
   const BASE_URL = import.meta.env.VITE_API_URL;
 
   useEffect(() => {
@@ -39,7 +39,7 @@ const HabitTracker = () => {
       user_id: 1, // Example user ID
       name: habitName,
       frequency: habitFrequency,
-      progress: 0, // Ensure progress is always 0 when adding
+      progress: 0, //  
       start_date: startDate.toISOString().split("T")[0],
       end_date: "2024-12-31",
     };
@@ -49,7 +49,7 @@ const HabitTracker = () => {
       setHabits([...habits, response.data]);
       setHabitName("");
       setHabitFrequency("Daily");
-      setModalOpen(false); // Close the modal after saving
+      setModalOpen(false);  
     } catch (error) {
       console.error("Error adding habit:", error);
     }
@@ -79,11 +79,11 @@ const HabitTracker = () => {
       const updatedHabits = habits.map((habit) =>
         habit.id === currentHabit.id ? { ...habit, ...updatedHabit } : habit
       );
-      setHabits(updatedHabits); // Update the local state with the updated habit
+      setHabits(updatedHabits); 
       setHabitName("");
       setHabitFrequency("Daily");
-      setModalOpen(false); // Close the modal after updating
-      setCurrentHabit(null); // Clear the current habit state
+      setModalOpen(false); 
+      setCurrentHabit(null); 
     } catch (error) {
       console.error("Error updating habit:", error);
     }
@@ -92,9 +92,7 @@ const HabitTracker = () => {
   const markComplete = async (habitId) => {
     const updatedHabit = habits.map((habit) => {
       if (habit.id === habitId) {
-        //revisit
-        // Toggle the 'completed' status and adjust progress accordingly
-        const newProgress = habit.completed ? 0 : 100;
+         const newProgress = habit.completed ? 0 : 100;
         const newCompleted = !habit.completed;
 
         return { ...habit, progress: newProgress, completed: newCompleted };
@@ -123,8 +121,8 @@ const HabitTracker = () => {
     setHabitName(habit.name);
     setHabitFrequency(habit.frequency);
     setStartDate(new Date(habit.start_date));
-    setCurrentHabit(habit); // Store the habit being edited
-    setModalOpen(true); // Open the modal
+    setCurrentHabit(habit); 
+    setModalOpen(true); 
   };
 
   if (loading) {
@@ -136,8 +134,7 @@ const HabitTracker = () => {
     try {
       await axios.delete(`${BASE_URL}/habits/${habitId}`);
 
-      // Update the local state to remove the deleted habit
-      setHabits(habits.filter((habit) => habit.id !== habitId));
+       setHabits(habits.filter((habit) => habit.id !== habitId));
     } catch (error) {
       console.error("Error deleting habit:", error);
     }

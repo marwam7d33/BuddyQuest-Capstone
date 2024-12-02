@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "./Journal.scss";
 import { format } from "date-fns";
-import { FaBook, FaPen } from "react-icons/fa"; // Import FaBook for the diary icon
-import { FaSmile, FaSadTear, FaAngry } from "react-icons/fa"; // Add mood icons if needed
+import { FaBook, FaPen } from "react-icons/fa";
 
 const BASE_URL = import.meta.env.VITE_API_URL;
 
@@ -19,7 +18,6 @@ const Journal = () => {
   const [formVisible, setFormVisible] = useState(false);
   const [editingJournal, setEditingJournal] = useState(null);
 
-  // List of moods (we'll use emojis directly here)
   const moods = ["😊", "😔", "😡", "😌", "😅"];
 
   useEffect(() => {
@@ -74,7 +72,7 @@ const Journal = () => {
         setEditingJournal(null);
       } else {
         response = await axios.post(`${BASE_URL}/journals`, data);
-        // Directly add the new journal entry to the state without needing a re-fetch
+        //   add the new journal entry to the state without needing a re-fetch
         setJournals((prevJournals) => [...prevJournals, response.data]);
       }
 
@@ -105,7 +103,6 @@ const Journal = () => {
   const handleDelete = async (id) => {
     try {
       await axios.delete(`${BASE_URL}/journals/${id}`);
-      // Immediately remove the deleted journal from state without needing a re-fetch
       setJournals((prevJournals) =>
         prevJournals.filter((journal) => journal.id !== id)
       );
@@ -119,15 +116,12 @@ const Journal = () => {
   return (
     <section className="journal">
       <div className="journal__page">
-        {/* Header with form toggle and diary icon */}
         <div className="journal__header">
           <button
             className="journal__header__plus"
             onClick={() => setFormVisible(!formVisible)}
           >
             <FaPen color="green" size="1.5rem" />{" "}
-            {/* Pencil icon for editing */}
-            {/* <FaBook color="green" size="1.5em" /> Diary icon */}
           </button>
           <div className="journal__header__mood">
             <span className="journal__header__mood__label">
@@ -183,7 +177,7 @@ const Journal = () => {
           </div>
         )}
 
-        {/* Display Journals */}
+        {/* displaying journals  */}
         <div className="journal__list">
           {journals.length === 0 ? (
             <p className="journal__list__empty">No journals found.</p>
@@ -208,7 +202,6 @@ const Journal = () => {
                   </div>
                 </div>
                 <div className="journal__item__mood">
-                  {/* Animated Emoji */}
                   <span className="mood-icon">{journal.mood}</span>
                 </div>
                 <p className="journal__item__entry">{journal.entry}</p>

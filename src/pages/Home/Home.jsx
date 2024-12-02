@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-import "./Home.scss"; // SCSS for styling
+import "./Home.scss";
 import HabitTracker from "../HabitTracker/HabitTracker";
 import PrimarySearchAppBar from "../../components/PrimarySearchAppBar/PrimarySearchAppBar.jsx"; // Corrected import for default export
-import SimpleBottomNavigation from "../../components/SimpleBottomNavigation/SimpleBottomNavigation"; // Adjust the path as needed
 
 const Home = () => {
   const navigate = useNavigate();
@@ -15,7 +14,6 @@ const Home = () => {
     navigate("/journal");
   };
 
-  // Check if we're on the homepage
   const isHomepage = location.pathname === "/";
 
   return (

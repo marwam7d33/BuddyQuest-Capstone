@@ -2,9 +2,9 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
-import HomeIcon from "@mui/icons-material/Home";
+import HomeIcon from "@mui/icons-material/Task"; // Updated for "Habits" icon
 import BookIcon from "@mui/icons-material/Book";
-import ChatIcon from "@mui/icons-material/Chat";
+import GroupIcon from "@mui/icons-material/Group"; // Updated for "Partners" icon
 import { useNavigate } from "react-router-dom";
 
 export default function SimpleBottomNavigation() {
@@ -32,9 +32,9 @@ export default function SimpleBottomNavigation() {
         value={value}
         onChange={(event, newValue) => handleNavigation(newValue)}
       >
-        <BottomNavigationAction label="Home" icon={<HomeIcon />} />
-        <BottomNavigationAction label="Notes" icon={<BookIcon />} />
-        <BottomNavigationAction label="Chat" icon={<ChatIcon />} />
+        <BottomNavigationAction label="Habits" icon={<HomeIcon />} />
+        <BottomNavigationAction label="Journal" icon={<BookIcon />} />
+        <BottomNavigationAction label="Partners" icon={<GroupIcon />} />
       </BottomNavigation>
     </Box>
   );

@@ -7,7 +7,7 @@ const Signup = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate(); //  
 
   const handleSignup = async (e) => {
     e.preventDefault();
@@ -17,10 +17,9 @@ const Signup = () => {
         username,
         password,
       });
-      // Navigate to the login page after successful signup
-      navigate("/login"); // Use navigate() to redirect to login page
+       navigate("/login"); //   redirect to login page
     } catch (err) {
-      setError("Error signing up"); // Handle signup failure
+      setError("Error signing up"); //  
     }
   };
 
