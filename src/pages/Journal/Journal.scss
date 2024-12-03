@@ -1,4 +1,4 @@
- .journal {
+.journal {
   background: linear-gradient(120deg, #a8e6cf 30%, #dcedc1 70%);
   animation: backgroundAnimation 10s infinite alternate;
 
@@ -159,3 +159,8 @@
     transform: scale(1);
   }
 }
+
+// .journal__form__button__wrapper {
+//   display: flex;
+//   flex-direction: row;
+// }

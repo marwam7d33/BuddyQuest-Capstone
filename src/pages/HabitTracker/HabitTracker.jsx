@@ -41,7 +41,7 @@ const HabitTracker = () => {
       frequency: habitFrequency,
       progress: 0, //  
       start_date: startDate.toISOString().split("T")[0],
-      end_date: "2024-12-31",
+      end_date: "2024-12-31", //hardcoded 
     };
 
     try {
@@ -88,7 +88,8 @@ const HabitTracker = () => {
       console.error("Error updating habit:", error);
     }
   };
-  //revisit this fnx
+  //revisit this fnx 
+  //linking habit to progress 
   const markComplete = async (habitId) => {
     const updatedHabit = habits.map((habit) => {
       if (habit.id === habitId) {

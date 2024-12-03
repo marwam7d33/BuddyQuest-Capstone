@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { MessageCircle } from "lucide-react";
-import "./MatchmakingPage.scss"; 
+import "./MatchmakingPage.scss";
+import Chat from "../../components/Chat/Chat.jsx";
 
 const MatchmakingPage = () => {
   const [users] = useState([
@@ -80,18 +81,15 @@ const MatchmakingPage = () => {
 
   const [selectedPartner, setSelectedPartner] = useState(null);
   const [notification, setNotification] = useState("");
-
   const [filters, setFilters] = useState({
-    ageRange: [20, 40], // Default range for age
-    sharedHabits: [], 
-    commitmentLevel: "", 
+    commitmentLevel: "",
+    ageRange: [13, 100], // Default age range (13+ to 100+)
   });
-
-  const [showFilters, setShowFilters] = useState(false); 
+  const [showFilters, setShowFilters] = useState(false);
 
   const handleConnect = () => {
     setNotification("Connection request sent");
-    setTimeout(() => setNotification(""), 3000); // Hide notification after 3 seconds
+    setTimeout(() => setNotification(""), 3000);
   };
 
   const handleChat = (partner) => {
@@ -99,41 +97,30 @@ const MatchmakingPage = () => {
   };
 
   const handleFilterChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setFilters((prevFilters) => {
-      if (type === "checkbox") {
-        return {
-          ...prevFilters,
-          [name]: checked
-            ? [...prevFilters[name], value]
-            : prevFilters[name].filter((item) => item !== value),
-        };
-      } else if (type === "range") {
-        return {
-          ...prevFilters,
-          [name]: value,
-        };
-      } else {
-        return {
-          ...prevFilters,
-          [name]: value,
-        };
-      }
-    });
+    const { name, value } = e.target;
+    if (name === "ageRange") {
+      const newAgeRange = [...filters.ageRange];
+      newAgeRange[e.target.dataset.index] = value;
+      setFilters((prevFilters) => ({
+        ...prevFilters,
+        ageRange: newAgeRange,
+      }));
+    } else {
+      setFilters((prevFilters) => ({
+        ...prevFilters,
+        [name]: value,
+      }));
+    }
   };
 
-  // Filter potential matches based on selected filters
   const filteredMatches = potentialMatches.filter((match) => {
     const matchesAge =
       match.age >= filters.ageRange[0] && match.age <= filters.ageRange[1];
-    const matchesHabits = filters.sharedHabits.every((habit) =>
-      match.sharedHabits.includes(habit)
-    );
     const matchesCommitmentLevel = filters.commitmentLevel
       ? match.commitmentLevel === filters.commitmentLevel
       : true;
 
-    return matchesAge && matchesHabits && matchesCommitmentLevel;
+    return matchesAge && matchesCommitmentLevel;
   });
 
   const renderActivePartners = () => (
@@ -178,22 +165,31 @@ const MatchmakingPage = () => {
           <div className="filter-group">
             <label>Age Range</label>
             <input
+              id="age-range-min"
               type="range"
               name="ageRange"
+              min="13"
+              max="100"
               value={filters.ageRange[0]}
               onChange={handleFilterChange}
+              step="1"
+              data-index="0"
             />
+            <span>{filters.ageRange[0]}+</span>{" "}
+            {/* Display minimum age range */}
             <input
+              id="age-range-max"
               type="range"
               name="ageRange"
-              min="20"
-              max="50"
+              min="13"
+              max="100"
               value={filters.ageRange[1]}
               onChange={handleFilterChange}
+              step="1"
+              data-index="1"
             />
-            <span>
-              {filters.ageRange[0]} - {filters.ageRange[1]}
-            </span>
+            <span>{filters.ageRange[1]}+</span>{" "}
+            {/* Display maximum age range */}
           </div>
 
           <div className="filter-group">
@@ -208,40 +204,6 @@ const MatchmakingPage = () => {
               <option value="Moderate">Moderate</option>
               <option value="Casual">Casual</option>
             </select>
-          </div>
-
-          <div className="filter-group">
-            <label>Shared Habits</label>
-            <div>
-              <input
-                type="checkbox"
-                name="sharedHabits"
-                value="Meditation"
-                onChange={handleFilterChange}
-              />
-              Meditation
-              <input
-                type="checkbox"
-                name="sharedHabits"
-                value="Exercise"
-                onChange={handleFilterChange}
-              />
-              Exercise
-              <input
-                type="checkbox"
-                name="sharedHabits"
-                value="Reading"
-                onChange={handleFilterChange}
-              />
-              Reading
-              <input
-                type="checkbox"
-                name="sharedHabits"
-                value="Nutrition"
-                onChange={handleFilterChange}
-              />
-              Nutrition
-            </div>
           </div>
         </div>
       )}
@@ -277,8 +239,8 @@ const MatchmakingPage = () => {
         >
           Back
         </button>
-        <h1>Chat with {selectedPartner.name}</h1>
       </div>
+      <Chat partner={selectedPartner} />
     </div>
   );
 
