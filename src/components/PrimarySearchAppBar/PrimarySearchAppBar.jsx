@@ -11,6 +11,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import MoreIcon from "@mui/icons-material/MoreVert";
+import MenuIcon from "@mui/icons-material/Menu"; // Import MenuIcon
 import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
 
 export default function PrimarySearchAppBar() {
@@ -39,13 +40,21 @@ export default function PrimarySearchAppBar() {
   };
 
   const handleProfileClick = () => {
-    navigate("/login");
+    navigate("/login"); // Navigates to the login page
     handleMenuClose();
   };
 
   const handleLogoutClick = () => {
-    navigate("/login");
+    navigate("/login"); // Navigates to the login page
     handleMenuClose();
+  };
+
+  const handleMailClick = () => {
+    navigate("/matchmaking"); // Navigate to matchmaking page
+  };
+
+  const handleNotificationClick = () => {
+    navigate("/matchmaking"); // Navigate to matchmaking page
   };
 
   const menuId = "primary-search-account-menu";
@@ -88,33 +97,8 @@ export default function PrimarySearchAppBar() {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton size="large" aria-label="show 4 new mails">
-          <Badge badgeContent={4} color="error">
-            <MailIcon sx={{ color: "darkgreen" }} />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem>
-        <IconButton size="large" aria-label="show 17 new notifications">
-          <Badge badgeContent={17} color="error">
-            <NotificationsIcon sx={{ color: "darkgreen" }} />
-          </Badge>
-        </IconButton>
-        <p>Notifications</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-        >
-          <AccountCircle sx={{ color: "darkgreen" }} />
-        </IconButton>
-        <p>Profile</p>
-      </MenuItem>
+      <MenuItem onClick={handleProfileClick}>Profile</MenuItem>
+      <MenuItem onClick={handleLogoutClick}>Logout</MenuItem>
     </Menu>
   );
 
@@ -123,49 +107,78 @@ export default function PrimarySearchAppBar() {
       <AppBar
         position="static"
         sx={{
-          backgroundColor: "#e8eee8", 
-          boxShadow: "none", 
+          backgroundColor: "#e8eee8", // Set the background color for the navbar
+          boxShadow: "none", // Remove shadow for smooth blend
         }}
       >
         <Toolbar>
+          <IconButton
+            size="large"
+            edge="start"
+            color="inherit"
+            aria-label="menu"
+            sx={{ mr: 2 }}
+          >
+            <MenuIcon /> {/* Use the imported MenuIcon */}
+          </IconButton>
           <Box sx={{ flexGrow: 1 }} />
-          <Box sx={{ display: { xs: "none", md: "flex" } }}>
-            <IconButton size="large" aria-label="show 4 new mails">
-              <Badge badgeContent={4} color="error">
-                <MailIcon sx={{ color: "darkgreen" }} />
-              </Badge>
-            </IconButton>
-            <IconButton size="large" aria-label="show 17 new notifications">
-              <Badge badgeContent={17} color="error">
-                <NotificationsIcon sx={{ color: "darkgreen" }} />
-              </Badge>
-            </IconButton>
-            <IconButton
-              size="large"
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
+          <IconButton
+            size="large"
+            aria-label="show 1 new mail"
+            color="inherit"
+            onClick={handleMailClick} // Navigate to matchmaking
+          >
+            <Badge badgeContent={1} color="error">
+              {" "}
+              {/* Set badge content to 1 */}
+              <MailIcon sx={{ color: "forestgreen" }} />{" "}
+              {/* Set color to forest green */}
+            </Badge>
+          </IconButton>
+          <IconButton
+            size="large"
+            aria-label="show notifications"
+            color="inherit"
+            onClick={handleNotificationClick} // Navigate to matchmaking
+            sx={{
+              position: "relative", // Ensure the badge is positioned correctly on the bell icon
+              "& .MuiBadge-dot": {
+                backgroundColor: "#f44336", // Use red for the notification dot
+                width: "10px", // Customize size
+                height: "10px", // Customize size
+                borderRadius: "50%", // Make it a circle
+              },
+            }}
+          >
+            <Badge
+              overlap="circular"
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              badgeContent=" "
+              color="error"
             >
-              <AccountCircle sx={{ color: "darkgreen" }} />
-            </IconButton>
-          </Box>
-          <Box sx={{ display: { xs: "flex", md: "none" } }}>
-            <IconButton
-              size="large"
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-            >
-              <MoreIcon sx={{ color: "darkgreen" }} />
-            </IconButton>
-          </Box>
+              <NotificationsIcon sx={{ color: "forestgreen" }} />{" "}
+              {/* Set color to forest green */}
+            </Badge>
+          </IconButton>
+          <IconButton
+            size="large"
+            edge="end"
+            aria-label="account of current user"
+            aria-controls={menuId}
+            aria-haspopup="true"
+            color="inherit"
+            onClick={handleProfileMenuOpen}
+          >
+            <AccountCircle sx={{ color: "forestgreen" }} />{" "}
+            {/* Set color to forest green */}
+          </IconButton>
         </Toolbar>
       </AppBar>
-      {renderMobileMenu}
       {renderMenu}
+      {renderMobileMenu}
     </Box>
   );
 }

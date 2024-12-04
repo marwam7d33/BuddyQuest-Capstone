@@ -5,7 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useNavigate } from "react-router-dom";
 import HabitCalendar from "../../components/HabitCalendar/HabitCalendar";
 import "./HabitTracker.scss";
- 
+
 const HabitTracker = () => {
   const [habits, setHabits] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -46,6 +46,32 @@ const HabitTracker = () => {
     );
   });
 
+  // const addHabit = async (e) => {
+  //   e.preventDefault();
+  //   if (!habitName.trim()) {
+  //     alert("Please enter a valid habit name.");
+  //     return;
+  //   }
+
+  //   const newHabit = {
+  //     user_id: 1,
+  //     name: habitName,
+  //     frequency: habitFrequency,
+  //     progress: 0,
+  //     start_date: startDate.toISOString().split("T")[0],
+  //     end_date: "2024-12-31",
+  //   };
+
+  //   try {
+  //     const response = await axios.post(`${BASE_URL}/habits`, newHabit);
+  //     setHabits([...habits, response.data]);
+  //     setHabitName("");
+  //     setHabitFrequency("Daily");
+  //     setModalOpen(false);
+  //   } catch (error) {
+  //     console.error("Error adding habit:", error);
+  //   }
+  // };
   const addHabit = async (e) => {
     e.preventDefault();
     if (!habitName.trim()) {
@@ -68,6 +94,11 @@ const HabitTracker = () => {
       setHabitName("");
       setHabitFrequency("Daily");
       setModalOpen(false);
+
+      // Trigger the notification
+      // You can update a global state or pass a prop to show this notification
+      alert("Don't do this alone, work with someone else!"); // Simple alert for demo, you can customize this
+      navigate("/matchmaking"); // Navigate to matchmaking page
     } catch (error) {
       console.error("Error adding habit:", error);
     }
