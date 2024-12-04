@@ -1,0 +1,32 @@
+.streaks-page {
+  padding: 20px;
+  text-align: center;
+}
+
+.streaks-page h2 {
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.streaks-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.streak-item {
+  background-color: #f4f4f4;
+  padding: 10px;
+  border-radius: 5px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.habit-name {
+  font-weight: bold;
+}
+
+.habit-streak {
+  color: #4caf50;
+  font-size: 1.1rem;
+}

@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css"; 
+import "react-datepicker/dist/react-datepicker.css";
+import { useNavigate } from "react-router-dom";
+import HabitCalendar from "../../components/HabitCalendar/HabitCalendar";
 import "./HabitTracker.scss";
-
+ 
 const HabitTracker = () => {
   const [habits, setHabits] = useState([]);
   const [loading, setLoading] = useState(true);
   const [habitName, setHabitName] = useState("");
   const [habitFrequency, setHabitFrequency] = useState("Daily");
   const [startDate, setStartDate] = useState(new Date());
+  const [selectedDate, setSelectedDate] = useState(new Date());
   const [modalOpen, setModalOpen] = useState(false);
-  const [currentHabit, setCurrentHabit] = useState(null); 
+  const [currentHabit, setCurrentHabit] = useState(null);
   const BASE_URL = import.meta.env.VITE_API_URL;
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchHabits = async () => {
@@ -28,6 +32,20 @@ const HabitTracker = () => {
     fetchHabits();
   }, []);
 
+  const handleDateSelect = (selectedDate) => {
+    setSelectedDate(selectedDate);
+    setStartDate(selectedDate);
+    setModalOpen(true);
+  };
+  //filter habits for selected date
+  const filteredHabits = habits.filter((habit) => {
+    const habitStartDate = new Date(habit.start_date);
+    return (
+      selectedDate >= habitStartDate &&
+      (!habit.end_date || selectedDate <= new Date(habit.end_date))
+    );
+  });
+
   const addHabit = async (e) => {
     e.preventDefault();
     if (!habitName.trim()) {
@@ -36,12 +54,12 @@ const HabitTracker = () => {
     }
 
     const newHabit = {
-      user_id: 1, // Example user ID
+      user_id: 1,
       name: habitName,
       frequency: habitFrequency,
-      progress: 0, //  
+      progress: 0,
       start_date: startDate.toISOString().split("T")[0],
-      end_date: "2024-12-31", //hardcoded 
+      end_date: "2024-12-31",
     };
 
     try {
@@ -49,7 +67,7 @@ const HabitTracker = () => {
       setHabits([...habits, response.data]);
       setHabitName("");
       setHabitFrequency("Daily");
-      setModalOpen(false);  
+      setModalOpen(false);
     } catch (error) {
       console.error("Error adding habit:", error);
     }
@@ -79,21 +97,21 @@ const HabitTracker = () => {
       const updatedHabits = habits.map((habit) =>
         habit.id === currentHabit.id ? { ...habit, ...updatedHabit } : habit
       );
-      setHabits(updatedHabits); 
+      setHabits(updatedHabits);
       setHabitName("");
       setHabitFrequency("Daily");
-      setModalOpen(false); 
-      setCurrentHabit(null); 
+      setModalOpen(false);
+      setCurrentHabit(null);
     } catch (error) {
       console.error("Error updating habit:", error);
     }
   };
-  //revisit this fnx 
-  //linking habit to progress 
+  //revisit this fnx
+  //linking habit to progress
   const markComplete = async (habitId) => {
     const updatedHabit = habits.map((habit) => {
       if (habit.id === habitId) {
-         const newProgress = habit.completed ? 0 : 100;
+        const newProgress = habit.completed ? 0 : 100;
         const newCompleted = !habit.completed;
 
         return { ...habit, progress: newProgress, completed: newCompleted };
@@ -122,8 +140,8 @@ const HabitTracker = () => {
     setHabitName(habit.name);
     setHabitFrequency(habit.frequency);
     setStartDate(new Date(habit.start_date));
-    setCurrentHabit(habit); 
-    setModalOpen(true); 
+    setCurrentHabit(habit);
+    setModalOpen(true);
   };
 
   if (loading) {
@@ -135,14 +153,56 @@ const HabitTracker = () => {
     try {
       await axios.delete(`${BASE_URL}/habits/${habitId}`);
 
-       setHabits(habits.filter((habit) => habit.id !== habitId));
+      setHabits(habits.filter((habit) => habit.id !== habitId));
     } catch (error) {
       console.error("Error deleting habit:", error);
     }
   };
+
+  const navigateToStreak = () => {
+    navigate("/streak", { state: { habits } });
+  };
+
+  if (loading) {
+    return <p>Loading habits...</p>;
+  }
+
   return (
+    // <div className="habit-tracker">
+    //   <div className="habit-tracker__header">
+    //     <HabitCalendar habits={habits} onDateSelect={handleDateSelect} />
+    //     {/* <Streak habits={habits} /> */}
+    //   </div>
+
+    //   <button
+    //     className="habit-tracker__add-button"
+    //     onClick={() => setModalOpen(true)}
+    //   >
+    //     + Add Habit
+    //   </button>
+
+    //   <div className="habit-tracker__habit-list">
+    //     {habits.map((habit) => (
+    //       <div
+    //         key={habit.id}
+    //         className={`habit-tracker__habit-item ${
+    //           habit.completed ? "completed" : ""
+    //         }`}
+    //       >
     <div className="habit-tracker">
-      <div className="habit-tracker__header"></div>
+      <div className="habit-tracker__header">
+        <HabitCalendar
+          habits={habits}
+          onDateSelect={handleDateSelect}
+          selectedDate={selectedDate}
+        />
+        <button
+          className="habit-tracker__streak-button"
+          onClick={navigateToStreak}
+        >
+          View Streaks
+        </button>
+      </div>
 
       <button
         className="habit-tracker__add-button"
@@ -152,7 +212,7 @@ const HabitTracker = () => {
       </button>
 
       <div className="habit-tracker__habit-list">
-        {habits.map((habit) => (
+        {filteredHabits.map((habit) => (
           <div
             key={habit.id}
             className={`habit-tracker__habit-item ${
@@ -163,8 +223,6 @@ const HabitTracker = () => {
               <input
                 type="checkbox"
                 checked={habit.completed}
-                //toggle
-                //revisit
                 onChange={() => markComplete(habit.id)}
                 className="habit-tracker__checkbox"
               />

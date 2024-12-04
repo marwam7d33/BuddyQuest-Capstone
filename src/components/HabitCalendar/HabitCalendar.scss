@@ -1,0 +1,93 @@
+.nature-habit-calendar.compact {
+  background-color: #f0f4f0;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 300px;
+  margin: 0 auto;
+
+  .calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+
+    h3 {
+      color: #2e7d32;
+      font-weight: bold;
+      font-size: 1rem;
+      margin: 0;
+    }
+  }
+
+  .calendar-navigation {
+    button {
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      padding: 3px 8px;
+      margin: 0 2px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 0.8rem;
+
+      &:hover {
+        background-color: #45a049;
+      }
+    }
+  }
+
+  .calendar-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    color: #2e7d32;
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 0.8rem;
+  }
+
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 2px;
+  }
+
+  .calendar-day {
+    border: 1px solid #e0e0e0;
+    border-radius: 3px;
+    padding: 5px;
+    min-height: 40px;
+    background-color: #ffffff;
+    position: relative;
+    font-size: 0.8rem;
+
+    &.other-month {
+      background-color: #f5f5f5;
+      color: #9e9e9e;
+    }
+
+    &.has-habits {
+      background-color: #e8f5e9;
+    }
+
+    &.today {
+      border: 2px solid #4caf50;
+      background-color: #c8e6c9;
+      font-weight: bold;
+    }
+
+    .calendar-day-number {
+      text-align: center;
+      margin-bottom: 2px;
+    }
+
+    .habit-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      margin: 1px;
+      display: inline-block;
+    }
+  }
+}

@@ -20,7 +20,7 @@ const Home = ({ setBottomNavValue }) => {
   return (
     <div className="home">
       <PrimarySearchAppBar />
-      <h1 className="home__title">Become the Best Version of YOU</h1>
+      <h1 className="home__title">Achieve Your Wellness Goals Today </h1>
       <p>Do something today for your mind, body, and well-being</p>
       <HabitTracker />
 
