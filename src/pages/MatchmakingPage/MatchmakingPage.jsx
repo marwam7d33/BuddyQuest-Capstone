@@ -133,15 +133,21 @@ const MatchmakingPage = () => {
             key={partner.id}
             onClick={() => setSelectedPartner(partner)}
           >
-            <div className="avatar">
-              <MessageCircle />
+            <div className="active-outer__card">
+              <div className="avatar">
+                {" "}
+                <MessageCircle />
+              </div>
+              <div className="partner-info">
+                <h4>{partner.name}</h4>
+                <p>Shared Habits: {partner.sharedHabits.join(", ")}</p>
+                <p className="last-active">
+                  Last active: {partner.lastActiveTime}
+                </p>
+              </div>
             </div>
-            <div className="partner-info">
-              <h4>{partner.name}</h4>
-              <p>Shared Habits: {partner.sharedHabits.join(", ")}</p>
-              <p className="last-active">
-                Last active: {partner.lastActiveTime}
-              </p>
+            <div className="chat__buttons">
+              <button className="chat__buttons-single">Chat</button>
             </div>
           </div>
         ))}

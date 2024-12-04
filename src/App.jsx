@@ -1,28 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import Home from "./Pages/Home/Home";
-import Journal from "./Pages/Journal/Journal";
-import Login from "./Pages/Login/Login";
-import Signup from "./Pages/Signup/Signup.jsx";
-import Profile from "./components/Profile/Profile"; // Import Profile Component
-import MatchmakingPage from "./Pages/MatchmakingPage/MatchmakingPage.jsx"; // Import MatchmakingPage component
-import SimpleBottomNavigation from "./components/SimpleBottomNavigation/SimpleBottomNavigation.jsx";
+import Home from "./pages/Home/Home.jsx";
+import Journal from "./pages/Journal/Journal.jsx";
+import Matchmaking from "./pages/MatchmakingPage/MatchmakingPage.jsx";
+import SimpleBottomNavigation from "./components/SimpleBottomNavigation/SimpleBottomNavigation";
 
 const App = () => {
+  const [bottomNavValue, setBottomNavValue] = useState(0);
+
   return (
     <Router>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/journal" element={<Journal />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/profile" element={<Profile />} />
-        <Route path="/matchmaking" element={<MatchmakingPage />} />{" "}
-        {/* Add the matchmaking page route */}
-      </Routes>
-      {/* Bottom Navigation */}
-      <div className="home__bottom-nav">
-        <SimpleBottomNavigation />
+      <div>
+        <Routes>
+          <Route
+            path="/"
+            element={<Home setBottomNavValue={setBottomNavValue} />}
+          />
+          <Route path="/journal" element={<Journal />} />
+          <Route path="/matchmaking" element={<Matchmaking />} />
+        </Routes>
+        <SimpleBottomNavigation
+          bottomNavValue={bottomNavValue}
+          setBottomNavValue={setBottomNavValue}
+        />
       </div>
     </Router>
   );

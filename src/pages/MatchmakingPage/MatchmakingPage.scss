@@ -82,9 +82,11 @@
         border-radius: 10px;
         padding: 15px;
         box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        justify-content: space-between;
+        align-items: center;
 
         .avatar {
-          background-color: #bbf7d0;
+          background-color: #4caf50;
           width: 60px;
           height: 60px;
           border-radius: 50%;
@@ -255,4 +257,30 @@
     flex-direction: row;
     justify-content: center;
   }
+}
+
+.chat__icon {
+  display: flex;
+}
+
+.chat__buttons {
+  width: 6rem;
+  height: 3rem;
+  display: flex;
+  gap: 20%;
+  flex-direction: row;
+
+  &-single {
+    background-color: #16a34a;
+    color: #fff;
+    border: none;
+    border-radius: 13px;
+    padding: 11px 20px;
+    font-size: 15px;
+    padding: 11px 20px;
+  }
+}
+
+.active-outer__card {
+  display: flex;
 }

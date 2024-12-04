@@ -1,16 +1,17 @@
 import React, { useState } from "react";
-import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./Home.scss";
 import HabitTracker from "../HabitTracker/HabitTracker";
-import PrimarySearchAppBar from "../../components/PrimarySearchAppBar/PrimarySearchAppBar.jsx"; // Corrected import for default export
+import PrimarySearchAppBar from "../../components/PrimarySearchAppBar/PrimarySearchAppBar.jsx";
 
-const Home = () => {
+const Home = ({ setBottomNavValue }) => {
   const navigate = useNavigate();
-  const location = useLocation(); // Get the current location
+  const location = useLocation();
   const [mood, setMood] = useState("");
 
   const handleEmojiClick = (selectedMood) => {
     setMood(selectedMood);
+    setBottomNavValue(1); // Set to the index for "Journal" in the navigation
     navigate("/journal");
   };
 
@@ -19,12 +20,10 @@ const Home = () => {
   return (
     <div className="home">
       <PrimarySearchAppBar />
-
       <h1 className="home__title">Become the Best Version of YOU</h1>
-      <p>Do something today for your mind body and well being</p>
+      <p>Do something today for your mind, body, and well-being</p>
       <HabitTracker />
 
-      {/* Conditionally render mood selector only on homepage */}
       {isHomepage && (
         <div className="home__mood">
           <h2 className="home__mood-title">How are you feeling today?</h2>
