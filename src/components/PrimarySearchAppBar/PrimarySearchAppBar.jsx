@@ -1,5 +1,6 @@
-import * as React from "react";
-import { styled, alpha } from "@mui/material/styles";
+import React, { useState } from "react";
+ 
+ import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -7,17 +8,22 @@ import IconButton from "@mui/material/IconButton";
 import Badge from "@mui/material/Badge";
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
+import CloseIcon from "@mui/icons-material/Close";
 import AccountCircle from "@mui/icons-material/AccountCircle";
 import MailIcon from "@mui/icons-material/Mail";
 import NotificationsIcon from "@mui/icons-material/Notifications";
-import MoreIcon from "@mui/icons-material/MoreVert";
-import MenuIcon from "@mui/icons-material/Menu"; // Import MenuIcon
-import { useNavigate } from "react-router-dom"; // Import useNavigate for navigation
+import MoreIcon from "@mui/icons-material/MoreVert"; // Corrected import
+import MenuIcon from "@mui/icons-material/Menu";
+import { useNavigate } from "react-router-dom";
 
-export default function PrimarySearchAppBar() {
+export default function PrimarySearchAppBar({
+  notifications = [],
+  onDismissNotification,
+}) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-  const navigate = useNavigate(); // Initialize navigate hook
+  const [notificationAnchorEl, setNotificationAnchorEl] = React.useState(null);
+  const navigate = useNavigate();
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -40,21 +46,35 @@ export default function PrimarySearchAppBar() {
   };
 
   const handleProfileClick = () => {
-    navigate("/login"); // Navigates to the login page
+    navigate("/login");
     handleMenuClose();
   };
 
   const handleLogoutClick = () => {
-    navigate("/login"); // Navigates to the login page
+    navigate("/login");
     handleMenuClose();
   };
 
   const handleMailClick = () => {
-    navigate("/matchmaking"); // Navigate to matchmaking page
+    navigate("/matchmaking");
   };
 
-  const handleNotificationClick = () => {
-    navigate("/matchmaking"); // Navigate to matchmaking page
+  const handleNotificationClick = (event) => {
+    setNotificationAnchorEl(event.currentTarget);
+  };
+
+  const handleNotificationClose = () => {
+    setNotificationAnchorEl(null);
+  };
+
+  const handleNotificationItemClick = (link) => {
+    navigate(link);
+    handleNotificationClose();
+  };
+
+  const handleDismissNotification = (notificationId, event) => {
+    event.stopPropagation();
+    onDismissNotification(notificationId);
   };
 
   const menuId = "primary-search-account-menu";
@@ -102,13 +122,52 @@ export default function PrimarySearchAppBar() {
     </Menu>
   );
 
+  const renderNotificationsMenu = (
+    <Menu
+      anchorEl={notificationAnchorEl}
+      open={Boolean(notificationAnchorEl)}
+      onClose={handleNotificationClose}
+      PaperProps={{
+        style: {
+          maxHeight: 300,
+          width: "300px",
+        },
+      }}
+    >
+      {notifications.length === 0 ? (
+        <MenuItem disabled>No new notifications</MenuItem>
+      ) : (
+        notifications.map((notification) => (
+          <MenuItem
+            key={notification.id}
+            onClick={() => handleNotificationItemClick(notification.link)}
+            sx={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <span>{notification.message}</span>
+            <IconButton
+              size="small"
+              onClick={(e) => handleDismissNotification(notification.id, e)}
+              sx={{ ml: 1 }}
+            >
+              <CloseIcon fontSize="small" />
+            </IconButton>
+          </MenuItem>
+        ))
+      )}
+    </Menu>
+  );
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar
         position="static"
         sx={{
-          backgroundColor: "#e8eee8", // Set the background color for the navbar
-          boxShadow: "none", // Remove shadow for smooth blend
+          backgroundColor: "#e8eee8",
+          boxShadow: "none",
         }}
       >
         <Toolbar>
@@ -119,48 +178,35 @@ export default function PrimarySearchAppBar() {
             aria-label="menu"
             sx={{ mr: 2 }}
           >
-            <MenuIcon /> {/* Use the imported MenuIcon */}
+            <MenuIcon />
           </IconButton>
           <Box sx={{ flexGrow: 1 }} />
           <IconButton
             size="large"
             aria-label="show 1 new mail"
             color="inherit"
-            onClick={handleMailClick} // Navigate to matchmaking
+            onClick={handleMailClick}
           >
             <Badge badgeContent={1} color="error">
-              {" "}
-              {/* Set badge content to 1 */}
-              <MailIcon sx={{ color: "forestgreen" }} />{" "}
-              {/* Set color to forest green */}
+              <MailIcon sx={{ color: "forestgreen" }} />
             </Badge>
           </IconButton>
           <IconButton
             size="large"
             aria-label="show notifications"
             color="inherit"
-            onClick={handleNotificationClick} // Navigate to matchmaking
-            sx={{
-              position: "relative", // Ensure the badge is positioned correctly on the bell icon
-              "& .MuiBadge-dot": {
-                backgroundColor: "#f44336", // Use red for the notification dot
-                width: "10px", // Customize size
-                height: "10px", // Customize size
-                borderRadius: "50%", // Make it a circle
-              },
-            }}
+            onClick={handleNotificationClick}
           >
             <Badge
+              badgeContent={notifications.length}
+              color="error"
               overlap="circular"
               anchorOrigin={{
                 vertical: "top",
                 horizontal: "right",
               }}
-              badgeContent=" "
-              color="error"
             >
-              <NotificationsIcon sx={{ color: "forestgreen" }} />{" "}
-              {/* Set color to forest green */}
+              <NotificationsIcon sx={{ color: "forestgreen" }} />
             </Badge>
           </IconButton>
           <IconButton
@@ -172,11 +218,11 @@ export default function PrimarySearchAppBar() {
             color="inherit"
             onClick={handleProfileMenuOpen}
           >
-            <AccountCircle sx={{ color: "forestgreen" }} />{" "}
-            {/* Set color to forest green */}
+            <AccountCircle sx={{ color: "forestgreen" }} />
           </IconButton>
         </Toolbar>
       </AppBar>
+      {renderNotificationsMenu}
       {renderMenu}
       {renderMobileMenu}
     </Box>

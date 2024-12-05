@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import HabitCalendar from "../../components/HabitCalendar/HabitCalendar";
 import "./HabitTracker.scss";
 
-const HabitTracker = () => {
+const HabitTracker = ({ onAddNotification }) => {
   const [habits, setHabits] = useState([]);
   const [loading, setLoading] = useState(true);
   const [habitName, setHabitName] = useState("");
@@ -15,6 +15,7 @@ const HabitTracker = () => {
   const [selectedDate, setSelectedDate] = useState(new Date());
   const [modalOpen, setModalOpen] = useState(false);
   const [currentHabit, setCurrentHabit] = useState(null);
+
   const BASE_URL = import.meta.env.VITE_API_URL;
   const navigate = useNavigate();
 
@@ -30,14 +31,15 @@ const HabitTracker = () => {
       }
     };
     fetchHabits();
-  }, []);
+  }, [BASE_URL]);
 
   const handleDateSelect = (selectedDate) => {
     setSelectedDate(selectedDate);
     setStartDate(selectedDate);
     setModalOpen(true);
   };
-  //filter habits for selected date
+
+  // Filter habits for selected date
   const filteredHabits = habits.filter((habit) => {
     const habitStartDate = new Date(habit.start_date);
     return (
@@ -46,32 +48,6 @@ const HabitTracker = () => {
     );
   });
 
-  // const addHabit = async (e) => {
-  //   e.preventDefault();
-  //   if (!habitName.trim()) {
-  //     alert("Please enter a valid habit name.");
-  //     return;
-  //   }
-
-  //   const newHabit = {
-  //     user_id: 1,
-  //     name: habitName,
-  //     frequency: habitFrequency,
-  //     progress: 0,
-  //     start_date: startDate.toISOString().split("T")[0],
-  //     end_date: "2024-12-31",
-  //   };
-
-  //   try {
-  //     const response = await axios.post(`${BASE_URL}/habits`, newHabit);
-  //     setHabits([...habits, response.data]);
-  //     setHabitName("");
-  //     setHabitFrequency("Daily");
-  //     setModalOpen(false);
-  //   } catch (error) {
-  //     console.error("Error adding habit:", error);
-  //   }
-  // };
   const addHabit = async (e) => {
     e.preventDefault();
     if (!habitName.trim()) {
@@ -91,14 +67,20 @@ const HabitTracker = () => {
     try {
       const response = await axios.post(`${BASE_URL}/habits`, newHabit);
       setHabits([...habits, response.data]);
+
+      // Create a new notification and pass it to parent
+      const newNotification = {
+        id: Date.now(),
+        message: `Great! Let's find an accountability partner for your "${habitName}" habit.`,
+        link: "/matchmaking",
+      };
+
+      onAddNotification(newNotification);
+
       setHabitName("");
       setHabitFrequency("Daily");
       setModalOpen(false);
-
-      // Trigger the notification
-      // You can update a global state or pass a prop to show this notification
-      alert("Don't do this alone, work with someone else!"); // Simple alert for demo, you can customize this
-      navigate("/matchmaking"); // Navigate to matchmaking page
+      navigate("/matchmaking");
     } catch (error) {
       console.error("Error adding habit:", error);
     }
@@ -137,14 +119,12 @@ const HabitTracker = () => {
       console.error("Error updating habit:", error);
     }
   };
-  //revisit this fnx
-  //linking habit to progress
+
   const markComplete = async (habitId) => {
     const updatedHabit = habits.map((habit) => {
       if (habit.id === habitId) {
         const newProgress = habit.completed ? 0 : 100;
         const newCompleted = !habit.completed;
-
         return { ...habit, progress: newProgress, completed: newCompleted };
       }
       return habit;
@@ -166,7 +146,7 @@ const HabitTracker = () => {
     const options = { year: "numeric", month: "long", day: "numeric" };
     return new Date(date).toLocaleDateString(undefined, options);
   };
-  //edit modal form
+
   const openEditModal = (habit) => {
     setHabitName(habit.name);
     setHabitFrequency(habit.frequency);
@@ -175,15 +155,9 @@ const HabitTracker = () => {
     setModalOpen(true);
   };
 
-  if (loading) {
-    return <p>Loading habits...</p>;
-  }
-
-  // Delete a habit
   const deleteHabit = async (habitId) => {
     try {
       await axios.delete(`${BASE_URL}/habits/${habitId}`);
-
       setHabits(habits.filter((habit) => habit.id !== habitId));
     } catch (error) {
       console.error("Error deleting habit:", error);
@@ -199,27 +173,6 @@ const HabitTracker = () => {
   }
 
   return (
-    // <div className="habit-tracker">
-    //   <div className="habit-tracker__header">
-    //     <HabitCalendar habits={habits} onDateSelect={handleDateSelect} />
-    //     {/* <Streak habits={habits} /> */}
-    //   </div>
-
-    //   <button
-    //     className="habit-tracker__add-button"
-    //     onClick={() => setModalOpen(true)}
-    //   >
-    //     + Add Habit
-    //   </button>
-
-    //   <div className="habit-tracker__habit-list">
-    //     {habits.map((habit) => (
-    //       <div
-    //         key={habit.id}
-    //         className={`habit-tracker__habit-item ${
-    //           habit.completed ? "completed" : ""
-    //         }`}
-    //       >
     <div className="habit-tracker">
       <div className="habit-tracker__header">
         <HabitCalendar

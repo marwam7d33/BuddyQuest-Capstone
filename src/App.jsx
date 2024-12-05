@@ -6,6 +6,8 @@ import Matchmaking from "./pages/MatchmakingPage/MatchmakingPage.jsx";
 import SimpleBottomNavigation from "./components/SimpleBottomNavigation/SimpleBottomNavigation";
 import StreaksPage from "./pages/StreaksPage/StreaksPage.jsx";
 
+
+
 const App = () => {
   const [bottomNavValue, setBottomNavValue] = useState(0);
 
