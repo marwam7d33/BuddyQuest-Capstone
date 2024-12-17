@@ -48,14 +48,6 @@ const MatchmakingPage = () => {
       lastActiveTime: "5 mins ago",
       progress: 85,
     },
-    {
-      id: 2,
-      name: "Alex Rivers",
-      avatar: "https://api.dicebear.com/7.x/personas/svg?seed=Alex",
-      sharedHabits: ["Exercise", "Nutrition"],
-      lastActiveTime: "30 mins ago",
-      progress: 75,
-    },
   ]);
 
   const [potentialMatches] = useState([
@@ -134,10 +126,7 @@ const MatchmakingPage = () => {
             onClick={() => setSelectedPartner(partner)}
           >
             <div className="active-outer__card">
-              <div className="avatar">
-                {" "}
-                {/* <MessageCircle /> */}
-              </div>
+              <div className="avatar"> {/* <MessageCircle /> */}</div>
               <div className="partner-info">
                 <h4>{partner.name}</h4>
                 <p>Shared Habits: {partner.sharedHabits.join(", ")}</p>
