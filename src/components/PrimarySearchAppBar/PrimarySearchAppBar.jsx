@@ -1,6 +1,6 @@
 import React, { useState } from "react";
- 
- import { styled, alpha } from "@mui/material/styles";
+
+import { styled, alpha } from "@mui/material/styles";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
@@ -122,6 +122,44 @@ export default function PrimarySearchAppBar({
     </Menu>
   );
 
+  // const renderNotificationsMenu = (
+  //   <Menu
+  //     anchorEl={notificationAnchorEl}
+  //     open={Boolean(notificationAnchorEl)}
+  //     onClose={handleNotificationClose}
+  //     PaperProps={{
+  //       style: {
+  //         maxHeight: 300,
+  //         width: "300px",
+  //       },
+  //     }}
+  //   >
+  //     {notifications.length === 0 ? (
+  //       <MenuItem disabled>No new notifications</MenuItem>
+  //     ) : (
+  //       notifications.map((notification) => (
+  //         <MenuItem
+  //           key={notification.id}
+  //           onClick={() => handleNotificationItemClick(notification.link)}
+  //           sx={{
+  //             display: "flex",
+  //             justifyContent: "space-between",
+  //             alignItems: "center",
+  //           }}
+  //         >
+  //           <span>{notification.message}</span>
+  //           <IconButton
+  //             size="small"
+  //             onClick={(e) => handleDismissNotification(notification.id, e)}
+  //             sx={{ ml: 1 }}
+  //           >
+  //             <CloseIcon fontSize="small" />
+  //           </IconButton>
+  //         </MenuItem>
+  //       ))
+  //     )}
+  //   </Menu>
+  // );
   const renderNotificationsMenu = (
     <Menu
       anchorEl={notificationAnchorEl}
@@ -129,11 +167,22 @@ export default function PrimarySearchAppBar({
       onClose={handleNotificationClose}
       PaperProps={{
         style: {
-          maxHeight: 300,
-          width: "300px",
+          maxHeight: 400,
+          width: "350px",
         },
       }}
     >
+      <MenuItem
+        disabled
+        sx={{
+          fontWeight: "bold",
+          color: "black",
+          backgroundColor: "#f0f0f0",
+        }}
+      >
+        Notifications
+      </MenuItem>
+
       {notifications.length === 0 ? (
         <MenuItem disabled>No new notifications</MenuItem>
       ) : (
@@ -143,24 +192,43 @@ export default function PrimarySearchAppBar({
             onClick={() => handleNotificationItemClick(notification.link)}
             sx={{
               display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
+              flexDirection: "column",
+              alignItems: "flex-start",
+              whiteSpace: "normal",
+              wordBreak: "break-word",
             }}
           >
-            <span>{notification.message}</span>
-            <IconButton
-              size="small"
-              onClick={(e) => handleDismissNotification(notification.id, e)}
-              sx={{ ml: 1 }}
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                width: "100%",
+                alignItems: "center",
+              }}
             >
-              <CloseIcon fontSize="small" />
-            </IconButton>
+              <span style={{ fontWeight: "bold" }}>Accountability Partner</span>
+              <IconButton
+                size="small"
+                onClick={(e) => handleDismissNotification(notification.id, e)}
+                sx={{ ml: 1 }}
+              >
+                <CloseIcon fontSize="small" />
+              </IconButton>
+            </div>
+            <p
+              style={{
+                margin: "5px 0",
+                fontSize: "0.9rem",
+                color: "#666",
+              }}
+            >
+              {notification.message}
+            </p>
           </MenuItem>
         ))
       )}
     </Menu>
   );
-
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar

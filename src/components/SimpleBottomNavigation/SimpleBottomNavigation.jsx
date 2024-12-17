@@ -5,10 +5,23 @@ import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import TaskIcon from "@mui/icons-material/Task";
 import BookIcon from "@mui/icons-material/Book";
 import GroupIcon from "@mui/icons-material/Group";
-import { useNavigate } from "react-router-dom";
-
+import { useNavigate, useLocation } from "react-router-dom";
+import { useEffect } from "react";
 const SimpleBottomNavigation = ({ bottomNavValue, setBottomNavValue }) => {
   const navigate = useNavigate();
+  const location = useLocation(); // Add this import and hook
+
+  useEffect(() => {
+    // Automatically set the correct bottom nav value based on current route
+    const routes = ["/", "/journal", "/matchmaking"];
+    const currentRouteIndex = routes.findIndex(
+      (route) => location.pathname === route
+    );
+
+    if (currentRouteIndex !== -1) {
+      setBottomNavValue(currentRouteIndex);
+    }
+  }, [location.pathname, setBottomNavValue]);
 
   const handleNavigation = (newValue) => {
     setBottomNavValue(newValue);
@@ -38,5 +51,4 @@ const SimpleBottomNavigation = ({ bottomNavValue, setBottomNavValue }) => {
     </Box>
   );
 };
-
 export default SimpleBottomNavigation;

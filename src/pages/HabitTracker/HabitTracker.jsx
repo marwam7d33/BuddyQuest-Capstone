@@ -71,7 +71,7 @@ const HabitTracker = ({ onAddNotification }) => {
       // Create a new notification and pass it to parent
       const newNotification = {
         id: Date.now(),
-        message: `Great! Let's find an accountability partner for your "${habitName}" habit.`,
+        message: `Great! Let's find an accountability partner for your ${habitName} habit.`,
         link: "/matchmaking",
       };
 
@@ -80,7 +80,8 @@ const HabitTracker = ({ onAddNotification }) => {
       setHabitName("");
       setHabitFrequency("Daily");
       setModalOpen(false);
-      navigate("/matchmaking");
+      // Remove direct navigation
+      // navigate("/matchmaking");
     } catch (error) {
       console.error("Error adding habit:", error);
     }

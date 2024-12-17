@@ -136,7 +136,7 @@ const MatchmakingPage = () => {
             <div className="active-outer__card">
               <div className="avatar">
                 {" "}
-                <MessageCircle />
+                {/* <MessageCircle /> */}
               </div>
               <div className="partner-info">
                 <h4>{partner.name}</h4>
