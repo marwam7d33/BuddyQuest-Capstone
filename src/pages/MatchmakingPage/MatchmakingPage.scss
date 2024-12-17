@@ -1,0 +1,286 @@
+.matchmaking-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  background: linear-gradient(to bottom, #e8eee8, #e8eee8);
+  color: #333;
+  font-family: "Poppins", sans-serif;
+
+  .profile-section {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    .avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      border: 2px solid #ddd;
+    }
+
+    .user-details {
+      h2 {
+        margin: 0;
+        font-size: 24px;
+        color: #333;
+      }
+      .location {
+        font-size: 16px;
+        color: #555;
+      }
+    }
+  }
+
+  .filters {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    .filter-group {
+      label {
+        font-weight: bold;
+        font-size: 16px;
+      }
+
+      input[type="range"] {
+        width: 100%;
+      }
+
+      .checkbox-group {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+      }
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 10px 15px;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+
+      &:hover {
+        background-color: #0056b3;
+      }
+    }
+  }
+
+  .partners-container {
+    .active-partners {
+      margin-top: 20px;
+
+      .active-partner-card {
+        margin: 15px;
+        display: flex;
+        gap: 15px;
+        background: white;
+        border-radius: 10px;
+        padding: 15px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        justify-content: space-between;
+        align-items: center;
+
+        .avatar {
+          background-color: #4caf50;
+          width: 60px;
+          height: 60px;
+          border-radius: 50%;
+          border: 2px solid #ddd;
+        }
+
+        .partner-info {
+          h4 {
+            margin: 0;
+            font-size: 18px;
+            color: #333;
+          }
+
+          p {
+            font-size: 14px;
+            color: #555;
+          }
+
+          .last-active {
+            font-size: 14px;
+            color: #777;
+          }
+        }
+      }
+    }
+  }
+}
+.potential-matches {
+  margin-top: 20px;
+
+  .match-card {
+    display: flex;
+    margin: 15px;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+    .partner-avatar {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      border: 2px solid #ddd;
+    }
+
+    .info {
+      flex-grow: 1;
+      margin-left: 15px;
+
+      h4 {
+        margin: 0;
+        font-size: 18px;
+        color: #333;
+      }
+
+      p {
+        margin: 0;
+        font-size: 14px;
+        color: #555;
+      }
+
+      .match-score {
+        background-color: #d1fedf;
+        padding: 8px 15px;
+        border-radius: 20px;
+        font-weight: 600;
+        color: #333;
+        display: inline-block;
+        text-align: center;
+        width: auto;
+      }
+    }
+
+    .connect-button {
+      background-color: #16a34a;
+      color: #fff;
+      border: none;
+      border-radius: 13px;
+      padding: 11px 20px;
+      font-size: 15px;
+
+      &:hover {
+        background-color: greenyellow;
+      }
+    }
+  }
+}
+
+.chat-container {
+  background: #e8eee8;
+  padding: 20px;
+  border-radius: 10px;
+
+  .chat-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+
+    .back-button {
+      background: none;
+      border: none;
+      font-size: 20px;
+      color: #007bff;
+      cursor: pointer;
+
+      &:hover {
+        color: #0056b3;
+      }
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 20px;
+      color: #333;
+    }
+  }
+}
+
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #32cd32;
+  padding: 10px;
+  border-radius: 5px;
+  color: white;
+  font-weight: bold;
+}
+
+.new-message {
+  color: #32cd32; //
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.2);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.find-partner {
+  display: flex;
+  flex-direction: column;
+  font-family: "Poppins";
+
+  &__header {
+    margin: 0;
+    font-size: 28px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  &__descriptions {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+}
+
+.chat__icon {
+  display: flex;
+}
+
+.chat__buttons {
+  width: 6rem;
+  height: 3rem;
+  display: flex;
+  gap: 20%;
+  flex-direction: row;
+
+  &-single {
+    background-color: #16a34a;
+    color: #fff;
+    border: none;
+    border-radius: 13px;
+    padding: 11px 20px;
+    font-size: 15px;
+    padding: 11px 20px;
+  }
+}
+
+.active-outer__card {
+  display: flex;
+}
